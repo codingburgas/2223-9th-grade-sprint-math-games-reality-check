@@ -4,7 +4,7 @@ game::game(Vector2u size, string title) {
     this->window.create(VideoMode(size.x, size.y), title);
 	this->window.setFramerateLimit(60);
 
-    tileTexture.loadFromFile("./Assets/example.png");
+    tileTexture.loadFromFile("./Assets/wall.png");
 
     for (int i = 0; i < 9; i++) {
         tiles.push_back(vector<Tile>());
