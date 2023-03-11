@@ -5,9 +5,11 @@ game::game(Vector2u size, string title) {
 	this->window.setFramerateLimit(60);
 
     tileTexture.loadFromFile("./Assets/wall.png");
+    mainMenuTexture.loadFromFile("./Assets/mainMenu.png");
 
     for (int i = 0; i < 9; i++) {
         tiles.push_back(vector<Tile>());
+     
         for (int j = 0; j < 16; j++) {
             Tile tile;
             tile.setTexture(tileTexture);
@@ -16,7 +18,8 @@ game::game(Vector2u size, string title) {
             tiles[i].push_back(tile);
         }
     }
-    
+
+    MainMenu mainMenu(mainMenuTexture, Vector2f(0,0), window);
     update();
 };
 
