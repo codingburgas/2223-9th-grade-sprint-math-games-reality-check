@@ -136,11 +136,13 @@
     <ClCompile Include="Bitwise Puzzle.cpp" />
     <ClCompile Include="CPPs\game.cpp" />
     <ClCompile Include="CPPs\player.cpp" />
+    <ClCompile Include="CPPs\tile.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="HPPs\game.h" />
     <ClInclude Include="HPPs\player.h" />
     <ClInclude Include="HPPs\precompile.h" />
+    <ClInclude Include="HPPs\tile.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
