@@ -21,7 +21,7 @@
     <ClCompile Include="CPPs\game.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="player.cpp">
+    <ClCompile Include="CPPs\player.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -32,7 +32,7 @@
     <ClInclude Include="HPPs\precompile.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="player.h">
+    <ClInclude Include="HPPs\player.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

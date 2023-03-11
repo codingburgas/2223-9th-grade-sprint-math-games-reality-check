@@ -1,4 +1,5 @@
 #include "precompile.h"
+#include "tile.hpp"
 
 class game {
 public:
@@ -8,5 +9,7 @@ public:
 
 private:
 	RenderWindow window;
-	CircleShape shape;
+	Texture tileTexture;
+	vector<vector<Tile>> tiles;
+
 };
