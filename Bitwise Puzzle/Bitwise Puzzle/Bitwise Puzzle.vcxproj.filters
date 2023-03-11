@@ -18,5 +18,16 @@
     <ClCompile Include="Bitwise Puzzle.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="CPPs\game.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="HPPs\game.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="HPPs\precompile.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
