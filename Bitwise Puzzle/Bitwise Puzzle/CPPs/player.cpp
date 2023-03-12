@@ -6,7 +6,7 @@ void Player::setTexture(Texture playerTexture) {
 
 }
 
-void Player::move(Vector2f offset) {
+void Player::move(Vector2f offset)  {
 	this->playerSprite.move(offset);
 	updatePos();
 }
@@ -20,4 +20,10 @@ void Player::updatePos() {
 	this->y = this->playerSprite.getPosition().y;
 	this->playerTile.x = this->x / 80;
 	this->playerTile.y = this->y / 80;
+}
+
+void Player::setPosition(Vector2f position)
+{
+	this->playerSprite.setPosition(position);
+	updatePos();
 }

@@ -36,10 +36,9 @@ game::game(Vector2u size, string title) {
     };
 
     loadLevel();
-
     plr.updatePos();
     plr.setTexture(plrTexture);
-
+    plr.setPosition(Vector2f(640, 320));
     //MainMenu mainMenu(mainMenuTexture, Vector2f(0,0), window);
     update();
 };
@@ -67,7 +66,6 @@ void game::drawWindow()
             tiles[i][j].draw(window);
         }
     }
-
     plr.draw(window);
 
     window.display();
@@ -94,16 +92,20 @@ void game::update()
 
 void game::processKeyPressed() {
     if (event.key.code == Keyboard::A) {
+        if(level[plr.playerTile.y][plr.playerTile.x-1] == 2)
         animatePlayerMovement(-80, 0);
     }
     else if (event.key.code == Keyboard::D) {
+        if (level[plr.playerTile.y][plr.playerTile.x+1] == 2)
         animatePlayerMovement(80, 0);
     }
     else if (event.key.code == Keyboard::S) {
+        if (level[plr.playerTile.y+1][plr.playerTile.x] == 2)
         animatePlayerMovement(0, 80);
 
     }
     else if (event.key.code == Keyboard::W) {
+        if (level[plr.playerTile.y-1][plr.playerTile.x] == 2)
         animatePlayerMovement(0, -80);
 
     }
