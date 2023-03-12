@@ -1,5 +1,9 @@
 #include "game.h"
 #include <map>
+#include "json.hpp"
+#include <fstream>
+
+using json = nlohmann::json;
 
 game::game(Vector2u size, string title) {
     this->window.create(VideoMode(size.x, size.y), title);
@@ -35,7 +39,7 @@ game::game(Vector2u size, string title) {
         {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}
     };
 
-    loadLevel();
+    loadLevel("1");
     plr.updatePos();
     plr.setTexture(plrTexture);
     plr.setPosition(Vector2f(640, 320));
@@ -43,13 +47,18 @@ game::game(Vector2u size, string title) {
     update();
 };
 
-void game::loadLevel() {
+void game::loadLevel(string level) {
+    fstream file("./Maps/maps.json");
+    json data = json::parse(file);
+
+    this->level = data[level];
+
     for (int i = 0; i < 9; i++) {
         tiles.push_back(vector<Tile>());
 
         for (int j = 0; j < 16; j++) {
             Tile tile;
-            tile.setTexture(textureMap[level[i][j]]);
+            tile.setTexture(textureMap[this->level[i][j]]);
             tile.setPosition(Vector2f(j * 80.f, i * 80.f));
 
             tiles[i].push_back(tile);

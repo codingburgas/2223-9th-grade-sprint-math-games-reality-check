@@ -47,5 +47,8 @@
     <ClInclude Include="HPPs\mainMenu.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="HPPs\json.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

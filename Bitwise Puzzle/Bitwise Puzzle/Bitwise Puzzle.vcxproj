@@ -141,6 +141,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="HPPs\game.h" />
+    <ClInclude Include="HPPs\json.hpp" />
     <ClInclude Include="HPPs\mainMenu.h" />
     <ClInclude Include="HPPs\player.h" />
     <ClInclude Include="HPPs\precompile.h" />

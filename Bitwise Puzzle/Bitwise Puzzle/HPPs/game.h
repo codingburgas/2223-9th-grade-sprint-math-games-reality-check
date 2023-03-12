@@ -10,7 +10,7 @@ public:
 	void update();
 	void processKeyPressed();
 	void animatePlayerMovement(int xChange, int yChange);
-	void loadLevel();
+	void loadLevel(string level);
 private:
 	RenderWindow window;
 	Texture wallTexture;
