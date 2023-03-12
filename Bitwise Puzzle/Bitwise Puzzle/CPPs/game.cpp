@@ -11,9 +11,9 @@ game::game(Vector2u size, string title) {
 
     wallTexture.loadFromFile("./Assets/wall.png");
     mainMenuTexture.loadFromFile("./Assets/mainMenu.png");
-    plrTexture.loadFromFile("./Assets/playerExample.png");
-    floorTexture.loadFromFile("./Assets/floorExample.png");
-    voidTexture.loadFromFile("./Assets/voidExample.png");
+    plrTexture.loadFromFile("./Assets/ORoperator.png");
+    floorTexture.loadFromFile("./Assets/floor.png");
+    voidTexture.loadFromFile("./Assets/void.png");
     
     // 0 - void
     // 1 - stena
@@ -27,22 +27,9 @@ game::game(Vector2u size, string title) {
         {2, floorTexture}
     };
 
-    level = {
-        {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-        {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-        {0,0,0,0,0,0,1,1,1,1,1,0,0,0,0,0},
-        {0,0,0,0,0,0,2,2,2,2,2,0,0,0,0,0},
-        {0,0,0,0,0,0,2,2,2,2,2,0,0,0,0,0},
-        {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-        {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-        {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-        {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}
-    };
-
-    loadLevel("1");
-    plr.updatePos();
+    loadLevel("4");
     plr.setTexture(plrTexture);
-    plr.setPosition(Vector2f(640, 320));
+    plr.setPosition(Vector2f(640, 240));
     //MainMenu mainMenu(mainMenuTexture, Vector2f(0,0), window);
     update();
 };
