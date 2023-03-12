@@ -1,24 +1,41 @@
 #include "game.h"
+#include <map>
 
 game::game(Vector2u size, string title) {
     this->window.create(VideoMode(size.x, size.y), title);
 	this->window.setFramerateLimit(60);
 
-    tileTexture.loadFromFile("./Assets/wall.png");
+    wallTexture.loadFromFile("./Assets/wall.png");
     mainMenuTexture.loadFromFile("./Assets/mainMenu.png");
     plrTexture.loadFromFile("./Assets/playerExample.png");
+    floorTexture.loadFromFile("./Assets/floorExample.png");
+    voidTexture.loadFromFile("./Assets/voidExample.png");
+    
+    // 0 - void
+    // 1 - stena
+    // 2 - pod
+    // 3 - klyuchalka
+    // 4 - flagche
 
-    for (int i = 0; i < 9; i++) {
-        tiles.push_back(vector<Tile>());
-     
-        for (int j = 0; j < 16; j++) {
-            Tile tile;
-            tile.setTexture(tileTexture);
-            tile.setPosition(Vector2f(j * 80.f, i * 80.f));
-        
-            tiles[i].push_back(tile);
-        }
-    }
+    textureMap = {
+        {0, voidTexture},
+        {1, wallTexture},
+        {2, floorTexture}
+    };
+
+    level = {
+        {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+        {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+        {0,0,0,0,0,0,1,1,1,1,1,0,0,0,0,0},
+        {0,0,0,0,0,0,2,2,2,2,2,0,0,0,0,0},
+        {0,0,0,0,0,0,2,2,2,2,2,0,0,0,0,0},
+        {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+        {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+        {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+        {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}
+    };
+
+    loadLevel();
 
     plr.updatePos();
     plr.setTexture(plrTexture);
@@ -27,15 +44,29 @@ game::game(Vector2u size, string title) {
     update();
 };
 
+void game::loadLevel() {
+    for (int i = 0; i < 9; i++) {
+        tiles.push_back(vector<Tile>());
+
+        for (int j = 0; j < 16; j++) {
+            Tile tile;
+            tile.setTexture(textureMap[level[i][j]]);
+            tile.setPosition(Vector2f(j * 80.f, i * 80.f));
+
+            tiles[i].push_back(tile);
+        }
+    }
+}
+
 void game::drawWindow()
 {
     window.clear();
 
-    /*for (int i = 0; i < 9; i++) {
+    for (int i = 0; i < 9; i++) {
         for (int j = 0; j < 16; j++) {
             tiles[i][j].draw(window);
         }
-    }*/
+    }
 
     plr.draw(window);
 
