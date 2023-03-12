@@ -1,18 +1,23 @@
 #include "player.h";
 
-int Player::moveDown()
-{
-	return this->y += 80;
+void Player::setTexture(Texture playerTexture) {
+	this->playerTexture.swap(playerTexture);
+	this->playerSprite.setTexture(this->playerTexture);
+
 }
-int Player::moveUP()
-{
-	return this->y -= 80;
+
+void Player::move(Vector2f offset) {
+	this->playerSprite.move(offset);
+	updatePos();
 }
-int Player::moveLeft()
-{
-	return this->x -= 80;
+
+void Player::draw(RenderWindow& window) {
+	window.draw(this->playerSprite);
 }
-int Player::moveRight()
-{
-	return this->x += 80;
+
+void Player::updatePos() {
+	this->x = this->playerSprite.getPosition().x;
+	this->y = this->playerSprite.getPosition().y;
+	this->playerTile.x = this->x / 80;
+	this->playerTile.y = this->y / 80;
 }

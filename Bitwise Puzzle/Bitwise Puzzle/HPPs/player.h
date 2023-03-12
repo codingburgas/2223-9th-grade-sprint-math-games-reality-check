@@ -4,11 +4,15 @@
 class Player
 {
 	public:
-		int moveUP();
-		int moveDown();
-		int moveLeft();
-		int moveRight();
+		void setTexture(Texture playerTexture);
+		void move(Vector2f offset);
+		void draw(RenderWindow& window);
+		void updatePos();
 	private:
-		int x = 600;
-		int y = 360;
+		Texture playerTexture;
+		Sprite playerSprite;
+
+		int x = 640;
+		int y = 320;
+		Vector2i playerTile;
 };
