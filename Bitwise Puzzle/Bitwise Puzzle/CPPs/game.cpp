@@ -27,7 +27,7 @@ game::game(Vector2u size, string title) {
         {2, floorTexture}
     };
 
-    loadLevel("4");
+    loadLevel("2");
     plr.setTexture(plrTexture);
     plr.setPosition(Vector2f(640, 240));
     //MainMenu mainMenu(mainMenuTexture, Vector2f(0,0), window);

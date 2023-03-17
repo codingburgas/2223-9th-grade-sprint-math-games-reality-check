@@ -18,11 +18,19 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\cpps\app.cpp" />
+    <ClCompile Include="src\cpps\main.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\includes\app.hpp" />
+    <ClInclude Include="src\includes\precompile.hpp" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{d11bfbab-f970-40ad-a40c-f208b89b24d7}</ProjectGuid>
-    <RootNamespace>BitwisePuzzle</RootNamespace>
+    <ProjectGuid>{310db6cd-bec2-43e2-af29-596bad11e96c}</ProjectGuid>
+    <RootNamespace>CustomMapBuilder</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -76,7 +84,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>SFML_STATIC;WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)SFML\include;$(SolutionDir)Bitwise Puzzle\HPPs</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Custom Map Builder\src\includes;$(SolutionDir)SFML\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -93,7 +101,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>SFML_STATIC;WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)SFML\include;$(SolutionDir)Bitwise Puzzle\HPPs</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Custom Map Builder\src\includes;$(SolutionDir)SFML\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -110,6 +118,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>$(SolutionDir)Custom Map Builder\src\includes;$(SolutionDir)SFML\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -124,6 +133,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>$(SolutionDir)Custom Map Builder\src\includes;$(SolutionDir)SFML\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -132,21 +142,6 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClCompile Include="CPPs\mainMenu.cpp" />
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="CPPs\game.cpp" />
-    <ClCompile Include="CPPs\player.cpp" />
-    <ClCompile Include="CPPs\tile.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="HPPs\game.h" />
-    <ClInclude Include="HPPs\json.hpp" />
-    <ClInclude Include="HPPs\mainMenu.h" />
-    <ClInclude Include="HPPs\player.h" />
-    <ClInclude Include="HPPs\precompile.h" />
-    <ClInclude Include="HPPs\tile.hpp" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
