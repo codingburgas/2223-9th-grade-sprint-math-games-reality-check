@@ -15,10 +15,6 @@ void App::initWindow() {
 		{2, this->floorTexture},
 	};
 
-	json _json;
-
-	std::fstream file("./Maps/custom.json");
-
 	map = {
 		{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0} ,
 		{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
@@ -126,6 +122,9 @@ void App::handleInput() {
 			Vector2f floorStartPos(this->selectorFloor.getPosition().x, this->selectorFloor.getPosition().y);
 			Vector2f floorEndPos(this->selectorFloor.getPosition().x + 80, this->selectorFloor.getPosition().y + 80);
 
+			Vector2f buttonStartPos(this->saveButton.getPosition().x, this->saveButton.getPosition().y);
+			Vector2f buttonEndPos(this->saveButton.getPosition().x + 140, this->saveButton.getPosition().y + 60);
+
 			if (x >= voidStartPos.x && x <= voidEndPos.x && y >= voidStartPos.y && y <= voidEndPos.y) {
 				this->selectorBorder.setPosition(Vector2f(1330, 20));
 				this->currentTile = 0;
@@ -138,14 +137,20 @@ void App::handleInput() {
 			else if (x >= floorStartPos.x && x <= floorEndPos.x && y >= floorStartPos.y && y <= floorEndPos.y) {
 				this->selectorBorder.setPosition(Vector2f(1330, 220));
 				this->currentTile = 2;
-
+			}
+			else if (x >= buttonStartPos.x && x <= buttonEndPos.x && y >= buttonStartPos.y && y <= buttonEndPos.y) {
+				std::cout << "s";
+				saveLevel();
 			}
 		}
 	}
 }
 
 void App::saveLevel() {
-	_json["2"] = json::array();
+	json _json;
+
+	std::fstream file("./Maps/custom.json");
+	_json["custom"] = json::array();
 
 	for (int i = 0; i < 9; i++) {
 		int row[16] = {};
@@ -153,8 +158,9 @@ void App::saveLevel() {
 			row[j] = map[i][j];
 		}
 
-		_json["2"].push_back(row);
+		_json["custom"].push_back(row);
 	}
 
 	file << _json.dump(4, ' ');
+	file.close();
 }
