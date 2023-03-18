@@ -13,14 +13,16 @@ public:
 	void loadLevel(string level);
 private:
 	RenderWindow window;
+	Texture voidTexture;
 	Texture wallTexture;
 	Texture floorTexture;
-	Texture voidTexture;
-	vector<vector<Tile>> tiles;
 	Texture mainMenuTexture;
 	Texture plrTexture;
+	Texture boxTexture;
 	Event event;
 	Player plr;
+	Tile attachedBoxes[4];
 	map<int, Texture> textureMap;
 	vector<vector<int>> level;
+	vector<vector<Tile>> tiles;
 };
