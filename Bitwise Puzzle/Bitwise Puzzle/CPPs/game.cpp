@@ -29,14 +29,17 @@ game::game(Vector2u size, string title) {
         {2, this->floorTexture}
     };
 
-    Tile box;
+    Box box;
     box.setTexture(boxTexture);
     box.setPosition(Vector2f(480, 240));
-    attachedBoxes[0] = box;
+
+    boxes.push_back(box);
 
     loadLevel("1");
     this->plr.setTexture(plrTexture);
     this->plr.setPosition(Vector2f(640, 240));
+
+    this->hasBox = false;
     //MainMenu mainMenu(mainMenuTexture, Vector2f(0,0), window);
     update();
 };
@@ -58,6 +61,8 @@ void game::loadLevel(string level) {
             this->tiles[i].push_back(tile);
         }
     }
+
+    this->level[3][6] = 5;
 }
 
 void game::drawWindow()
@@ -70,10 +75,8 @@ void game::drawWindow()
         }
     }
     
-    for (int i = 0; i < 4; i++) {
-        if (this->attachedBoxes[i].exists()) {
-            this->attachedBoxes[i].draw(this->window);
-        }
+    for (int i = 0; i < boxes.size(); i++) {
+        this->boxes[i].draw(this->window);
     }
     
     this->plr.draw(this->window);
@@ -103,43 +106,102 @@ void game::processKeyPressed() {
     if (this->event.key.code == Keyboard::A) {
         if (this->plr.playerTile.x - 1 >= 0) {
             if (this->level[this->plr.playerTile.y][this->plr.playerTile.x - 1] == 2) {
-                for (int i = 0; i < 4; i++) {
-                    if (this->attachedBoxes[i].exists()) {
-                        if (this->attachedBoxes[i].position.x - 1 >= 0) {
-                            if (this->level[this->attachedBoxes[i].position.y][this->attachedBoxes[i].position.x - 1] == 2) {
+                if (this->hasBox) {
+                    for (int i = 0; i < attachedBoxes.size(); i++) {
+                        if (this->attachedBoxes[i]->position.x - 1 >= 0) {
+                            if (this->level[this->attachedBoxes[i]->position.y][this->attachedBoxes[i]->position.x - 1] == 2) {
+                                this->level[this->attachedBoxes[i]->position.y][this->attachedBoxes[i]->position.x] = 2;
+
                                 animatePlayerMovement(-80, 0);
                             }
                         }
                     }
                 }
+                else {
+                    animatePlayerMovement(-80, 0);
 
+                    if (this->plr.playerTile.x - 1 >= 0) {
+                        if (this->level[this->plr.playerTile.y][this->plr.playerTile.x - 1] == 5) {
+                            if (!hasBox) {
+                                this->hasBox = true;
+                            }
+                            for (int i = 0; i < boxes.size(); i++) {
+                                if (boxes[i].position.x == this->plr.playerTile.x - 1 && boxes[i].position.y == this->plr.playerTile.y) {
+                                    attachedBoxes.push_back(&boxes[i]);
+                                    this->level[this->attachedBoxes[attachedBoxes.size() - 1]->position.y][this->attachedBoxes[attachedBoxes.size() - 1]->position.x] = 2;
+                                    cout << "Aing" << endl;
+                                }
+                            }
+                        }
+                    }
+                }
             }
         }
     }
     else if (this->event.key.code == Keyboard::D) {
         if (this->plr.playerTile.x + 1 <= 15) {
             if (this->level[this->plr.playerTile.y][this->plr.playerTile.x + 1] == 2) {
-                for (int i = 0; i < 4; i++) {
-                    if (this->attachedBoxes[i].exists()) {
-                        if (this->attachedBoxes[i].position.x + 1 <= 15) {
-                            if (this->level[this->attachedBoxes[i].position.y][this->attachedBoxes[i].position.x + 1] == 2) {
+                if (this->hasBox) {
+                    for (int i = 0; i < attachedBoxes.size(); i++) {
+                        if (this->attachedBoxes[i]->position.x + 1 <= 15) {
+                            if (this->level[this->attachedBoxes[i]->position.y][this->attachedBoxes[i]->position.x + 1] == 2) {
+                                this->level[this->attachedBoxes[i]->position.y][this->attachedBoxes[i]->position.x] = 2;
+
                                 animatePlayerMovement(80, 0);
                             }
                         }
                     }
-                }
 
+                }
+                else {
+                    animatePlayerMovement(80, 0);
+
+                    if (this->plr.playerTile.x + 1 <= 15) {
+                        if (this->level[this->plr.playerTile.y][this->plr.playerTile.x + 1] == 5) {
+                            if (!hasBox) {
+                                this->hasBox = true;
+                            }
+                            for (int i = 0; i < boxes.size(); i++) {
+                                if (boxes[i].position.x == this->plr.playerTile.x + 1 && boxes[i].position.y == this->plr.playerTile.y) {
+                                    attachedBoxes.push_back(&boxes[i]);
+                                    this->level[this->attachedBoxes[attachedBoxes.size() - 1]->position.y][this->attachedBoxes[attachedBoxes.size() - 1]->position.x] = 2;
+                                    cout << "Ding" << endl;
+                                }
+                            }
+                        }
+                    }
+                }
             }
         }
     }
     else if (this->event.key.code == Keyboard::S) {
         if (this->plr.playerTile.y + 1 <= 8) {
             if (this->level[this->plr.playerTile.y + 1][this->plr.playerTile.x] == 2) {
-                for (int i = 0; i < 4; i++) {
-                    if (this->attachedBoxes[i].exists()) {
-                        if (this->attachedBoxes[i].position.y + 1 <= 8) {
-                            if (this->level[this->attachedBoxes[i].position.y + 1][this->attachedBoxes[i].position.x] == 2) {
+                if (this->hasBox) {
+                    for (int i = 0; i < attachedBoxes.size(); i++) {
+                        if (this->attachedBoxes[i]->position.y + 1 <= 8) {
+                            if (this->level[this->attachedBoxes[i]->position.y + 1][this->attachedBoxes[i]->position.x] == 2) {
+                                this->level[this->attachedBoxes[i]->position.y][this->attachedBoxes[i]->position.x] = 2;
+
                                 animatePlayerMovement(0, 80);
+                            }
+                        }
+                    }
+                }
+                else {
+                    animatePlayerMovement(0, 80);
+
+                    if (this->plr.playerTile.y + 1 <= 8) {
+                        if (this->level[this->plr.playerTile.y + 1][this->plr.playerTile.x] == 5) {
+                            if (!hasBox) {
+                                this->hasBox = true;
+                            }
+                            for (int i = 0; i < boxes.size(); i++) {
+                                if (boxes[i].position.x == this->plr.playerTile.x && boxes[i].position.y - 1 == this->plr.playerTile.y) {
+                                    attachedBoxes.push_back(&boxes[i]);
+                                    this->level[this->attachedBoxes[attachedBoxes.size() - 1]->position.y][this->attachedBoxes[attachedBoxes.size() - 1]->position.x] = 2;
+                                    cout << "Sing" << endl;
+                                }
                             }
                         }
                     }
@@ -150,11 +212,31 @@ void game::processKeyPressed() {
     else if (this->event.key.code == Keyboard::W) {
         if (this->plr.playerTile.y - 1 >= 0) {
             if (this->level[this->plr.playerTile.y - 1][this->plr.playerTile.x] == 2) {
-                for (int i = 0; i < 4; i++) {
-                    if (this->attachedBoxes[i].exists()) {
-                        if (this->attachedBoxes[i].position.y - 1 >= 0) {
-                            if (this->level[this->attachedBoxes[i].position.y - 1][this->attachedBoxes[i].position.x] == 2) {
+                if (this->hasBox) {
+                    for (int i = 0; i < attachedBoxes.size(); i++) {
+                        if (this->attachedBoxes[i]->position.y - 1 >= 0) {
+                            if (this->level[this->attachedBoxes[i]->position.y - 1][this->attachedBoxes[i]->position.x] == 2) {
+                                this->level[this->attachedBoxes[i]->position.y][this->attachedBoxes[i]->position.x] = 2;
+
                                 animatePlayerMovement(0, -80);
+                            }
+                        }
+                    }
+                }
+                else {
+                    animatePlayerMovement(0, -80);
+
+                    if (this->plr.playerTile.y - 1 >= 0) {
+                        if (this->level[this->plr.playerTile.y - 1][this->plr.playerTile.x] == 5) {
+                            if (!hasBox) {
+                                this->hasBox = true;
+                            }
+                            for (int i = 0; i < boxes.size(); i++) {
+                                if (boxes[i].position.x == this->plr.playerTile.x && boxes[i].position.y + 1 == this->plr.playerTile.y) {
+                                    attachedBoxes.push_back(&boxes[i]);
+                                    this->level[this->attachedBoxes[attachedBoxes.size() - 1]->position.y][this->attachedBoxes[attachedBoxes.size() - 1]->position.x] = 2;
+                                    cout << "Wing" << endl;
+                                }
                             }
                         }
                     }
@@ -171,10 +253,9 @@ void game::animatePlayerMovement(int xChange, int yChange) {
             drawWindow();
             this->plr.move(Vector2f(-16, 0));
             
-            for (int i = 0; i < 2; i++) {
-                if (this->attachedBoxes[i].exists()) {
-                    this->attachedBoxes[i].move(Vector2f(-16, 0));
-
+            if (hasBox) {
+                for (int i = 0; i < attachedBoxes.size(); i++) {
+                    this->attachedBoxes[i]->move(Vector2f(-16, 0));
                 }
             }
         }
@@ -184,8 +265,10 @@ void game::animatePlayerMovement(int xChange, int yChange) {
             drawWindow();
             this->plr.move(Vector2f(16, 0));
 
-            for (int i = 0; i < 2; i++) {
-                this->attachedBoxes[i].move(Vector2f(16, 0));
+            if (hasBox) {
+                for (int i = 0; i < attachedBoxes.size(); i++) {
+                    this->attachedBoxes[i]->move(Vector2f(16, 0));
+                }
             }
         }
     }
@@ -194,8 +277,10 @@ void game::animatePlayerMovement(int xChange, int yChange) {
             drawWindow();
             this->plr.move(Vector2f(0, -16));
 
-            for (int i = 0; i < 2; i++) {
-                this->attachedBoxes[i].move(Vector2f(0, -16));
+            if (hasBox) {
+                for (int i = 0; i < attachedBoxes.size(); i++) {
+                    this->attachedBoxes[i]->move(Vector2f(0, -16));
+                }
             }
         }
     }
@@ -204,8 +289,10 @@ void game::animatePlayerMovement(int xChange, int yChange) {
             drawWindow();
             this->plr.move(Vector2f(0, 16));
 
-            for (int i = 0; i < 2; i++) {
-                this->attachedBoxes[i].move(Vector2f(0, 16));
+            if (hasBox) {
+                for (int i = 0; i < attachedBoxes.size(); i++) {
+                    this->attachedBoxes[i]->move(Vector2f(0, 16));
+                }
             }
         }
     }

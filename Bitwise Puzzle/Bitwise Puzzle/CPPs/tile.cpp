@@ -19,10 +19,3 @@ void Tile::move(Vector2f offset) {
 	this->position.x = this->tileSprite.getPosition().x / 80;
 	this->position.y = this->tileSprite.getPosition().y / 80;
 }
-
-bool Tile::exists() {
-	if (this->tileSprite.getTexture() != nullptr) {
-		return true;
-	}
-	return false;
-}

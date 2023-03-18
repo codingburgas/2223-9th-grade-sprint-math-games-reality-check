@@ -133,6 +133,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="CPPs\box.cpp" />
     <ClCompile Include="CPPs\mainMenu.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="CPPs\game.cpp" />
@@ -140,6 +141,7 @@
     <ClCompile Include="CPPs\tile.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="HPPs\box.hpp" />
     <ClInclude Include="HPPs\game.h" />
     <ClInclude Include="HPPs\json.hpp" />
     <ClInclude Include="HPPs\mainMenu.h" />

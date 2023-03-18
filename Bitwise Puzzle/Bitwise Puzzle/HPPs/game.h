@@ -2,6 +2,7 @@
 #include "tile.hpp"
 #include "mainMenu.h"
 #include "player.h"
+#include "box.hpp"
 
 class game {
 public:
@@ -21,8 +22,11 @@ private:
 	Texture boxTexture;
 	Event event;
 	Player plr;
-	Tile attachedBoxes[4];
 	map<int, Texture> textureMap;
+	vector<Box> boxes;
+	vector<Box*> attachedBoxes;
 	vector<vector<int>> level;
 	vector<vector<Tile>> tiles;
+
+	bool hasBox;
 };
