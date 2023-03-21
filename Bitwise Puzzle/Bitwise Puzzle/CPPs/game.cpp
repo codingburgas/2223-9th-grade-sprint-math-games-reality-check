@@ -33,7 +33,12 @@ game::game(Vector2u size, string title) {
     box.setTexture(boxTexture);
     box.setPosition(Vector2f(480, 240));
 
+    Box box2;
+    box2.setTexture(boxTexture);
+    box2.setPosition(Vector2f(480, 400));
+
     boxes.push_back(box);
+    boxes.push_back(box2);
 
     loadLevel("1");
     this->plr.setTexture(plrTexture);
@@ -63,6 +68,7 @@ void game::loadLevel(string level) {
     }
 
     this->level[3][6] = 5;
+    this->level[5][6] = 5;
 }
 
 void game::drawWindow()
@@ -111,14 +117,23 @@ void game::processKeyPressed() {
                         if (this->attachedBoxes[i]->position.x - 1 >= 0) {
                             if (this->level[this->attachedBoxes[i]->position.y][this->attachedBoxes[i]->position.x - 1] == 2) {
                                 this->level[this->attachedBoxes[i]->position.y][this->attachedBoxes[i]->position.x] = 2;
+                                
+                                canMove = true;
+                            }
+                            else {
+                                canMove = false;
+                                break;
 
-                                animatePlayerMovement(-80, 0);
                             }
                         }
+                    }
+                    if (canMove) {
+                        animatePlayerMovement(-80, 0);
                     }
                 }
                 else {
                     animatePlayerMovement(-80, 0);
+
 
                     if (this->plr.playerTile.x - 1 >= 0) {
                         if (this->level[this->plr.playerTile.y][this->plr.playerTile.x - 1] == 5) {
@@ -129,12 +144,12 @@ void game::processKeyPressed() {
                                 if (boxes[i].position.x == this->plr.playerTile.x - 1 && boxes[i].position.y == this->plr.playerTile.y) {
                                     attachedBoxes.push_back(&boxes[i]);
                                     this->level[this->attachedBoxes[attachedBoxes.size() - 1]->position.y][this->attachedBoxes[attachedBoxes.size() - 1]->position.x] = 2;
-                                    cout << "Aing" << endl;
                                 }
                             }
                         }
                     }
                 }
+                checkForAdjacentBoxes();
             }
         }
     }
@@ -146,15 +161,24 @@ void game::processKeyPressed() {
                         if (this->attachedBoxes[i]->position.x + 1 <= 15) {
                             if (this->level[this->attachedBoxes[i]->position.y][this->attachedBoxes[i]->position.x + 1] == 2) {
                                 this->level[this->attachedBoxes[i]->position.y][this->attachedBoxes[i]->position.x] = 2;
+                                
+                                canMove = true;
 
-                                animatePlayerMovement(80, 0);
+                            }
+                            else {
+                                canMove = false;
+                                break;
                             }
                         }
+                    }
+                    if (canMove) {
+                        animatePlayerMovement(80, 0);
                     }
 
                 }
                 else {
                     animatePlayerMovement(80, 0);
+
 
                     if (this->plr.playerTile.x + 1 <= 15) {
                         if (this->level[this->plr.playerTile.y][this->plr.playerTile.x + 1] == 5) {
@@ -165,12 +189,12 @@ void game::processKeyPressed() {
                                 if (boxes[i].position.x == this->plr.playerTile.x + 1 && boxes[i].position.y == this->plr.playerTile.y) {
                                     attachedBoxes.push_back(&boxes[i]);
                                     this->level[this->attachedBoxes[attachedBoxes.size() - 1]->position.y][this->attachedBoxes[attachedBoxes.size() - 1]->position.x] = 2;
-                                    cout << "Ding" << endl;
                                 }
                             }
                         }
                     }
                 }
+                checkForAdjacentBoxes();
             }
         }
     }
@@ -183,9 +207,18 @@ void game::processKeyPressed() {
                             if (this->level[this->attachedBoxes[i]->position.y + 1][this->attachedBoxes[i]->position.x] == 2) {
                                 this->level[this->attachedBoxes[i]->position.y][this->attachedBoxes[i]->position.x] = 2;
 
-                                animatePlayerMovement(0, 80);
+                                canMove = true;
+                            }
+                            else {
+                                canMove = false;
+                                break;
+
                             }
                         }
+                    }
+
+                    if (canMove) {
+                        animatePlayerMovement(0, 80);
                     }
                 }
                 else {
@@ -200,16 +233,17 @@ void game::processKeyPressed() {
                                 if (boxes[i].position.x == this->plr.playerTile.x && boxes[i].position.y - 1 == this->plr.playerTile.y) {
                                     attachedBoxes.push_back(&boxes[i]);
                                     this->level[this->attachedBoxes[attachedBoxes.size() - 1]->position.y][this->attachedBoxes[attachedBoxes.size() - 1]->position.x] = 2;
-                                    cout << "Sing" << endl;
                                 }
                             }
                         }
                     }
                 }
+                checkForAdjacentBoxes();
             }
         }
     }
     else if (this->event.key.code == Keyboard::W) {
+
         if (this->plr.playerTile.y - 1 >= 0) {
             if (this->level[this->plr.playerTile.y - 1][this->plr.playerTile.x] == 2) {
                 if (this->hasBox) {
@@ -218,9 +252,17 @@ void game::processKeyPressed() {
                             if (this->level[this->attachedBoxes[i]->position.y - 1][this->attachedBoxes[i]->position.x] == 2) {
                                 this->level[this->attachedBoxes[i]->position.y][this->attachedBoxes[i]->position.x] = 2;
 
-                                animatePlayerMovement(0, -80);
+                                canMove = true;
+                            }
+                            else {
+                                canMove = false;
+                                break;
                             }
                         }
+                    }
+
+                    if (canMove) {
+                        animatePlayerMovement(0, -80);
                     }
                 }
                 else {
@@ -235,12 +277,13 @@ void game::processKeyPressed() {
                                 if (boxes[i].position.x == this->plr.playerTile.x && boxes[i].position.y + 1 == this->plr.playerTile.y) {
                                     attachedBoxes.push_back(&boxes[i]);
                                     this->level[this->attachedBoxes[attachedBoxes.size() - 1]->position.y][this->attachedBoxes[attachedBoxes.size() - 1]->position.x] = 2;
-                                    cout << "Wing" << endl;
                                 }
                             }
                         }
                     }
                 }
+
+                checkForAdjacentBoxes();
             }
         }
 
@@ -269,6 +312,7 @@ void game::animatePlayerMovement(int xChange, int yChange) {
                 for (int i = 0; i < attachedBoxes.size(); i++) {
                     this->attachedBoxes[i]->move(Vector2f(16, 0));
                 }
+                
             }
         }
     }
@@ -281,6 +325,7 @@ void game::animatePlayerMovement(int xChange, int yChange) {
                 for (int i = 0; i < attachedBoxes.size(); i++) {
                     this->attachedBoxes[i]->move(Vector2f(0, -16));
                 }
+
             }
         }
     }
@@ -292,6 +337,52 @@ void game::animatePlayerMovement(int xChange, int yChange) {
             if (hasBox) {
                 for (int i = 0; i < attachedBoxes.size(); i++) {
                     this->attachedBoxes[i]->move(Vector2f(0, 16));
+                }
+            }
+        }
+    }
+}
+
+void game::checkForAdjacentBoxes() {
+    if (this->plr.playerTile.y - 1 >= 0) {
+        for (int i = 0; i < boxes.size(); i++) {
+            if (this->level[this->plr.playerTile.y - 1][this->plr.playerTile.x] == 5 && (this->plr.playerTile.y - 1 == boxes[i].position.y && this->plr.playerTile.x == boxes[i].position.x)) {
+                attachedBoxes.push_back(&boxes[i]);
+                if (!hasBox) {
+                    this->hasBox = true;
+                }
+            }
+        }
+    }
+
+    if (this->plr.playerTile.y + 1 <= 8) {
+        for (int i = 0; i < boxes.size(); i++) {
+            if (this->level[this->plr.playerTile.y + 1][this->plr.playerTile.x] == 5 && (this->plr.playerTile.y + 1 == boxes[i].position.y && this->plr.playerTile.x == boxes[i].position.x)) {
+                attachedBoxes.push_back(&this->boxes[i]);
+                if (!hasBox) {
+                    this->hasBox = true;
+                }
+            }
+        }
+    }
+
+    if (this->plr.playerTile.x - 1 >= 0) {
+        for (int i = 0; i < boxes.size(); i++) {
+            if (this->level[this->plr.playerTile.y][this->plr.playerTile.x - 1] == 5 && (this->plr.playerTile.y == boxes[i].position.y && this->plr.playerTile.x - 1 == boxes[i].position.x)) {
+                attachedBoxes.push_back(&this->boxes[i]);
+                if (!hasBox) {
+                    this->hasBox = true;
+                }
+            }
+        }
+    }
+
+    if (this->plr.playerTile.y + 1 <= 15) {
+        for (int i = 0; i < boxes.size(); i++) {
+            if (this->level[this->plr.playerTile.y][this->plr.playerTile.x + 1] == 5 && (this->plr.playerTile.y == boxes[i].position.y && this->plr.playerTile.x + 1 == boxes[i].position.x)) {
+                attachedBoxes.push_back(&this->boxes[i]);
+                if (!hasBox) {
+                    this->hasBox = true;
                 }
             }
         }

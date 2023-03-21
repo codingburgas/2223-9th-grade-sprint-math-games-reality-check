@@ -12,6 +12,7 @@ public:
 	void processKeyPressed();
 	void animatePlayerMovement(int xChange, int yChange);
 	void loadLevel(string level);
+	void checkForAdjacentBoxes();
 private:
 	RenderWindow window;
 	Texture voidTexture;
@@ -29,4 +30,5 @@ private:
 	vector<vector<Tile>> tiles;
 
 	bool hasBox;
+	bool canMove;
 };
