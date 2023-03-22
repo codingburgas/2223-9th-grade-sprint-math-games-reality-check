@@ -15,18 +15,23 @@ game::game(Vector2u size, string title) {
     this->boxTexture.loadFromFile("./Assets/exampleBox0.png");
     this->plrTexture.loadFromFile("./Assets/ORoperator.png");
     this->mainMenuTexture.loadFromFile("./Assets/mainMenu.png");
+    this->lock0Texture.loadFromFile("./Assets/Lock0.png");
+    this->lock1Texture.loadFromFile("./Assets/Lock1.png");
     
     // 0 - void
     // 1 - stena
     // 2 - pod
-    // 3 - klyuchalka
-    // 4 - flagche
-    // 5 - kutiya
+    // 3 - klyuchalka 0
+    // 4 - klyuchalka 1
+    // 5 - flagche
+    // 6 - kutiya
 
     textureMap = {
         {0, this->voidTexture},
         {1, this->wallTexture},
-        {2, this->floorTexture}
+        {2, this->floorTexture},
+        {3, this->lock0Texture},
+        {4, this->lock1Texture}
     };
 
     loadLevel("1");
@@ -48,7 +53,7 @@ void game::loadLevel(string level) {
         this->tiles.push_back(vector<Tile>());
 
         for (int j = 0; j < 16; j++) {
-            if (this->level[i][j] != 5) {
+            if (this->level[i][j] != 6) {
                 Tile tile;
                 tile.setTexture(textureMap[this->level[i][j]]);
                 tile.setPosition(Vector2f(j * 80.f, i * 80.f));
@@ -136,7 +141,7 @@ void game::processKeyPressed() {
 
 
                     if (this->plr.playerTile.x - 1 >= 0) {
-                        if (this->level[this->plr.playerTile.y][this->plr.playerTile.x - 1] == 5) {
+                        if (this->level[this->plr.playerTile.y][this->plr.playerTile.x - 1] == 6) {
                             if (!hasBox) {
                                 this->hasBox = true;
                             }
@@ -181,7 +186,7 @@ void game::processKeyPressed() {
 
 
                     if (this->plr.playerTile.x + 1 <= 15) {
-                        if (this->level[this->plr.playerTile.y][this->plr.playerTile.x + 1] == 5) {
+                        if (this->level[this->plr.playerTile.y][this->plr.playerTile.x + 1] == 6) {
                             if (!hasBox) {
                                 this->hasBox = true;
                             }
@@ -225,7 +230,7 @@ void game::processKeyPressed() {
                     animatePlayerMovement(0, 80);
 
                     if (this->plr.playerTile.y + 1 <= 8) {
-                        if (this->level[this->plr.playerTile.y + 1][this->plr.playerTile.x] == 5) {
+                        if (this->level[this->plr.playerTile.y + 1][this->plr.playerTile.x] == 6) {
                             if (!hasBox) {
                                 this->hasBox = true;
                             }
@@ -269,7 +274,7 @@ void game::processKeyPressed() {
                     animatePlayerMovement(0, -80);
 
                     if (this->plr.playerTile.y - 1 >= 0) {
-                        if (this->level[this->plr.playerTile.y - 1][this->plr.playerTile.x] == 5) {
+                        if (this->level[this->plr.playerTile.y - 1][this->plr.playerTile.x] == 6) {
                             if (!hasBox) {
                                 this->hasBox = true;
                             }
@@ -346,7 +351,7 @@ void game::animatePlayerMovement(int xChange, int yChange) {
 void game::checkForAdjacentBoxes() {
     if (this->plr.playerTile.y - 1 >= 0) {
         for (int i = 0; i < boxes.size(); i++) {
-            if (this->level[this->plr.playerTile.y - 1][this->plr.playerTile.x] == 5 && (this->plr.playerTile.y - 1 == boxes[i].position.y && this->plr.playerTile.x == boxes[i].position.x)) {
+            if (this->level[this->plr.playerTile.y - 1][this->plr.playerTile.x] == 6 && (this->plr.playerTile.y - 1 == boxes[i].position.y && this->plr.playerTile.x == boxes[i].position.x)) {
                 attachedBoxes.push_back(&boxes[i]);
                 if (!hasBox) {
                     this->hasBox = true;
@@ -357,7 +362,7 @@ void game::checkForAdjacentBoxes() {
 
     if (this->plr.playerTile.y + 1 <= 8) {
         for (int i = 0; i < boxes.size(); i++) {
-            if (this->level[this->plr.playerTile.y + 1][this->plr.playerTile.x] == 5 && (this->plr.playerTile.y + 1 == boxes[i].position.y && this->plr.playerTile.x == boxes[i].position.x)) {
+            if (this->level[this->plr.playerTile.y + 1][this->plr.playerTile.x] == 6 && (this->plr.playerTile.y + 1 == boxes[i].position.y && this->plr.playerTile.x == boxes[i].position.x)) {
                 attachedBoxes.push_back(&this->boxes[i]);
                 if (!hasBox) {
                     this->hasBox = true;
@@ -368,7 +373,7 @@ void game::checkForAdjacentBoxes() {
 
     if (this->plr.playerTile.x - 1 >= 0) {
         for (int i = 0; i < boxes.size(); i++) {
-            if (this->level[this->plr.playerTile.y][this->plr.playerTile.x - 1] == 5 && (this->plr.playerTile.y == boxes[i].position.y && this->plr.playerTile.x - 1 == boxes[i].position.x)) {
+            if (this->level[this->plr.playerTile.y][this->plr.playerTile.x - 1] == 6 && (this->plr.playerTile.y == boxes[i].position.y && this->plr.playerTile.x - 1 == boxes[i].position.x)) {
                 attachedBoxes.push_back(&this->boxes[i]);
                 if (!hasBox) {
                     this->hasBox = true;
@@ -379,7 +384,7 @@ void game::checkForAdjacentBoxes() {
 
     if (this->plr.playerTile.y + 1 <= 15) {
         for (int i = 0; i < boxes.size(); i++) {
-            if (this->level[this->plr.playerTile.y][this->plr.playerTile.x + 1] == 5 && (this->plr.playerTile.y == boxes[i].position.y && this->plr.playerTile.x + 1 == boxes[i].position.x)) {
+            if (this->level[this->plr.playerTile.y][this->plr.playerTile.x + 1] == 6 && (this->plr.playerTile.y == boxes[i].position.y && this->plr.playerTile.x + 1 == boxes[i].position.x)) {
                 attachedBoxes.push_back(&this->boxes[i]);
                 if (!hasBox) {
                     this->hasBox = true;

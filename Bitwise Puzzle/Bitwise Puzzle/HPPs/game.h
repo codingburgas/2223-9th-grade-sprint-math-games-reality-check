@@ -21,11 +21,14 @@ private:
 	Texture mainMenuTexture;
 	Texture plrTexture;
 	Texture boxTexture;
+	Texture lock0Texture;
+	Texture lock1Texture;
 	Event event;
 	Player plr;
 	map<int, Texture> textureMap;
 	vector<Box> boxes;
 	vector<Box*> attachedBoxes;
+	vector<CustomLock> locks;
 	vector<vector<int>> level;
 	vector<vector<Tile>> tiles;
 
