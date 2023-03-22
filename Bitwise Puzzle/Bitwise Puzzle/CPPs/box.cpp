@@ -14,6 +14,10 @@ void Box::setTexture(Texture& boxTexture) {
 	this->boxSprite.setTexture(boxTexture);
 }
 
+void Box::setValue(int value) {
+	this->value = value;
+}
+
 void Box::move(Vector2f offset) {
 	this->boxSprite.move(offset);
 	this->position.x = this->boxSprite.getPosition().x / 80;

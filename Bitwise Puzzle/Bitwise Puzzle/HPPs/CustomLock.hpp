@@ -7,5 +7,9 @@ private:
 
 public:
 	int value;
-	void unlock();
+	void draw(RenderWindow& window);
+	void setPosition(Vector2f position);
+	void setTexture(Texture& lockTexture);
+	void setValue(int value);
+	void fadeOut();
 };

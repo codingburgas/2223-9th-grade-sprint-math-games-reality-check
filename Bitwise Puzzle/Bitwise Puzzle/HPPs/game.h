@@ -3,6 +3,7 @@
 #include "mainMenu.h"
 #include "player.h"
 #include "box.hpp"
+#include "CustomLock.hpp"
 
 class game {
 public:
@@ -20,7 +21,8 @@ private:
 	Texture floorTexture;
 	Texture mainMenuTexture;
 	Texture plrTexture;
-	Texture boxTexture;
+	Texture box0Texture;
+	Texture box1Texture;
 	Texture lock0Texture;
 	Texture lock1Texture;
 	Event event;
@@ -32,6 +34,5 @@ private:
 	vector<vector<int>> level;
 	vector<vector<Tile>> tiles;
 
-	bool hasBox;
 	bool canMove;
 };
