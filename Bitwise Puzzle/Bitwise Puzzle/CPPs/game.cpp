@@ -29,17 +29,6 @@ game::game(Vector2u size, string title) {
         {2, this->floorTexture}
     };
 
-    Box box;
-    box.setTexture(boxTexture);
-    box.setPosition(Vector2f(480, 240));
-
-    Box box2;
-    box2.setTexture(boxTexture);
-    box2.setPosition(Vector2f(480, 400));
-
-    boxes.push_back(box);
-    boxes.push_back(box2);
-
     loadLevel("1");
     this->plr.setTexture(plrTexture);
     this->plr.setPosition(Vector2f(640, 240));
@@ -59,16 +48,27 @@ void game::loadLevel(string level) {
         this->tiles.push_back(vector<Tile>());
 
         for (int j = 0; j < 16; j++) {
-            Tile tile;
-            tile.setTexture(textureMap[this->level[i][j]]);
-            tile.setPosition(Vector2f(j * 80.f, i * 80.f));
+            if (this->level[i][j] != 5) {
+                Tile tile;
+                tile.setTexture(textureMap[this->level[i][j]]);
+                tile.setPosition(Vector2f(j * 80.f, i * 80.f));
 
-            this->tiles[i].push_back(tile);
+                this->tiles[i].push_back(tile);
+            }
+            else {
+                Tile tile;
+                tile.setTexture(textureMap[2]);
+                tile.setPosition(Vector2f(j * 80.f, i * 80.f));
+                this->tiles[i].push_back(tile);
+
+                Box box;
+                box.setTexture(boxTexture);
+                box.setPosition(Vector2f(j * 80.f, i * 80.f));
+
+                this->boxes.push_back(box);
+            }
         }
     }
-
-    this->level[3][6] = 5;
-    this->level[5][6] = 5;
 }
 
 void game::drawWindow()
