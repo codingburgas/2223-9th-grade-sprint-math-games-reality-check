@@ -13,7 +13,7 @@ void CustomLock::setTexture(Texture& lockTexture) {
 	this->lockSprite.setTexture(lockTexture);
 }
 
-void CustomLock::setValue(int value) {
+void CustomLock::setValue(bool value) {
 	this->value = value;
 }
 

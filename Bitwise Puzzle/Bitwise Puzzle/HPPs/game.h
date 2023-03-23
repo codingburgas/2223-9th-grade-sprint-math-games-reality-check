@@ -14,6 +14,7 @@ public:
 	void animatePlayerMovement(int xChange, int yChange);
 	void loadLevel(string level);
 	void checkForAdjacentBoxes();
+	void checkForUnlock();
 private:
 	RenderWindow window;
 	Texture voidTexture;

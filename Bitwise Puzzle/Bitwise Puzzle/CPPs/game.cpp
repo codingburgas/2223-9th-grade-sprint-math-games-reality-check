@@ -15,7 +15,7 @@ game::game(Vector2u size, string title) {
     this->floorTexture.loadFromFile("./Assets/floor.png");
     this->box0Texture.loadFromFile("./Assets/Box0.png");
     this->box1Texture.loadFromFile("./Assets/Box1.png");
-    this->plrTexture.loadFromFile("./Assets/ORoperator.png");
+    this->plrTexture.loadFromFile("./Assets/NOToperator.png");
     this->mainMenuTexture.loadFromFile("./Assets/mainMenu.png");
     this->lock0Texture.loadFromFile("./Assets/Lock0.png");
     this->lock1Texture.loadFromFile("./Assets/Lock1.png");
@@ -138,8 +138,6 @@ void game::update()
 
 void game::processKeyPressed() {
     if (this->event.key.code == Keyboard::A) {
-        /*thread t(&CustomLock::fadeOut, &this->locks[0]);
-        t.detach();*/
         if (this->plr.playerTile.x - 1 >= 0) {
             if (this->level[this->plr.playerTile.y][this->plr.playerTile.x - 1] == 2) {
                 for (int i = 0; i < attachedBoxes.size(); i++) {
@@ -279,23 +277,27 @@ void game::animatePlayerMovement(int xChange, int yChange) {
 }
 
 void game::checkForAdjacentBoxes() {
+    bool attachedNewBox = false;
     if (this->plr.playerTile.y - 1 >= 0) {
         for (int i = 0; i < boxes.size(); i++) {
-            if (this->level[this->plr.playerTile.y - 1][this->plr.playerTile.x] == 6 && (this->plr.playerTile.y - 1 == boxes[i].position.y && this->plr.playerTile.x == boxes[i].position.x)) {
+            if (this->level[this->plr.playerTile.y - 1][this->plr.playerTile.x] >= 6 && (this->plr.playerTile.y - 1 == boxes[i].position.y && this->plr.playerTile.x == boxes[i].position.x)) {
                 this->level[this->plr.playerTile.y - 1][this->plr.playerTile.x] = 2;
 
                 attachedBoxes.push_back(&boxes[i]);
+                attachedNewBox = true;
+
             }
         }
     }
 
     if (this->plr.playerTile.y + 1 <= 8) {
         for (int i = 0; i < boxes.size(); i++) {
-            if (this->level[this->plr.playerTile.y + 1][this->plr.playerTile.x] == 6 && (this->plr.playerTile.y + 1 == boxes[i].position.y && this->plr.playerTile.x == boxes[i].position.x)) {
+            if (this->level[this->plr.playerTile.y + 1][this->plr.playerTile.x] >= 6 && (this->plr.playerTile.y + 1 == boxes[i].position.y && this->plr.playerTile.x == boxes[i].position.x)) {
                 this->level[this->plr.playerTile.y + 1][this->plr.playerTile.x] = 2;
 
 
                 attachedBoxes.push_back(&this->boxes[i]);
+                attachedNewBox = true;
 
             }
         }
@@ -303,22 +305,53 @@ void game::checkForAdjacentBoxes() {
 
     if (this->plr.playerTile.x - 1 >= 0) {
         for (int i = 0; i < boxes.size(); i++) {
-            if (this->level[this->plr.playerTile.y][this->plr.playerTile.x - 1] == 6 && (this->plr.playerTile.y == boxes[i].position.y && this->plr.playerTile.x - 1 == boxes[i].position.x)) {
+            if (this->level[this->plr.playerTile.y][this->plr.playerTile.x - 1] >= 6 && (this->plr.playerTile.y == boxes[i].position.y && this->plr.playerTile.x - 1 == boxes[i].position.x)) {
                 this->level[this->plr.playerTile.y][this->plr.playerTile.x - 1] = 2;
 
                 attachedBoxes.push_back(&this->boxes[i]);
 
+                attachedNewBox = true;
             }
         }
     }
 
     if (this->plr.playerTile.y + 1 <= 15) {
         for (int i = 0; i < boxes.size(); i++) {
-            if (this->level[this->plr.playerTile.y][this->plr.playerTile.x + 1] == 6 && (this->plr.playerTile.y == boxes[i].position.y && this->plr.playerTile.x + 1 == boxes[i].position.x)) {
+            if (this->level[this->plr.playerTile.y][this->plr.playerTile.x + 1] >= 6 && (this->plr.playerTile.y == boxes[i].position.y && this->plr.playerTile.x + 1 == boxes[i].position.x)) {
                 this->level[this->plr.playerTile.y][this->plr.playerTile.x + 1] = 2;
 
                 attachedBoxes.push_back(&this->boxes[i]);
 
+                attachedNewBox = true;
+            }
+        }
+    }
+
+    if (attachedNewBox && this->attachedBoxes.size() > 1) {
+        checkForUnlock();
+    }
+
+    attachedNewBox = false;
+}
+
+void game::checkForUnlock() {
+    for (int i = 0; i < this->locks.size(); i++) {
+        for (int j = 0; j < this->attachedBoxes.size(); j += 2) {
+            if (j + 1 < this->attachedBoxes.size()) {
+                if (this->attachedBoxes[j]->position.y != this->plr.playerTile.y && this->attachedBoxes[j + 1]->position.y != this->plr.playerTile.y) {
+                    if (this->locks[i].value == (this->attachedBoxes[j]->value || this->attachedBoxes[j + 1]->value)) {
+                        thread t(&CustomLock::fadeOut, &this->locks[i]);
+                        t.detach();
+                        break;
+                    }
+                }
+                else if (this->attachedBoxes[j]->position.x != this->plr.playerTile.x && this->attachedBoxes[j + 1]->position.x != this->plr.playerTile.x) {
+                    if (this->locks[i].value == (this->attachedBoxes[j]->value || this->attachedBoxes[j + 1]->value)) {
+                        thread t(&CustomLock::fadeOut, &this->locks[i]);
+                        t.detach();
+                        break;
+                    }
+                }
             }
         }
     }

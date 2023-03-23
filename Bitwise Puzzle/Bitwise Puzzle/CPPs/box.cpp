@@ -14,7 +14,7 @@ void Box::setTexture(Texture& boxTexture) {
 	this->boxSprite.setTexture(boxTexture);
 }
 
-void Box::setValue(int value) {
+void Box::setValue(bool value) {
 	this->value = value;
 }
 
