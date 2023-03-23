@@ -138,8 +138,8 @@ void game::update()
 
 void game::processKeyPressed() {
     if (this->event.key.code == Keyboard::A) {
-        thread t(&CustomLock::fadeOut, &this->locks[0]);
-        t.detach();
+        /*thread t(&CustomLock::fadeOut, &this->locks[0]);
+        t.detach();*/
         if (this->plr.playerTile.x - 1 >= 0) {
             if (this->level[this->plr.playerTile.y][this->plr.playerTile.x - 1] == 2) {
                 for (int i = 0; i < attachedBoxes.size(); i++) {
@@ -282,6 +282,8 @@ void game::checkForAdjacentBoxes() {
     if (this->plr.playerTile.y - 1 >= 0) {
         for (int i = 0; i < boxes.size(); i++) {
             if (this->level[this->plr.playerTile.y - 1][this->plr.playerTile.x] == 6 && (this->plr.playerTile.y - 1 == boxes[i].position.y && this->plr.playerTile.x == boxes[i].position.x)) {
+                this->level[this->plr.playerTile.y - 1][this->plr.playerTile.x] = 2;
+
                 attachedBoxes.push_back(&boxes[i]);
             }
         }
@@ -290,7 +292,11 @@ void game::checkForAdjacentBoxes() {
     if (this->plr.playerTile.y + 1 <= 8) {
         for (int i = 0; i < boxes.size(); i++) {
             if (this->level[this->plr.playerTile.y + 1][this->plr.playerTile.x] == 6 && (this->plr.playerTile.y + 1 == boxes[i].position.y && this->plr.playerTile.x == boxes[i].position.x)) {
+                this->level[this->plr.playerTile.y + 1][this->plr.playerTile.x] = 2;
+
+
                 attachedBoxes.push_back(&this->boxes[i]);
+
             }
         }
     }
@@ -298,7 +304,10 @@ void game::checkForAdjacentBoxes() {
     if (this->plr.playerTile.x - 1 >= 0) {
         for (int i = 0; i < boxes.size(); i++) {
             if (this->level[this->plr.playerTile.y][this->plr.playerTile.x - 1] == 6 && (this->plr.playerTile.y == boxes[i].position.y && this->plr.playerTile.x - 1 == boxes[i].position.x)) {
+                this->level[this->plr.playerTile.y][this->plr.playerTile.x - 1] = 2;
+
                 attachedBoxes.push_back(&this->boxes[i]);
+
             }
         }
     }
@@ -306,7 +315,10 @@ void game::checkForAdjacentBoxes() {
     if (this->plr.playerTile.y + 1 <= 15) {
         for (int i = 0; i < boxes.size(); i++) {
             if (this->level[this->plr.playerTile.y][this->plr.playerTile.x + 1] == 6 && (this->plr.playerTile.y == boxes[i].position.y && this->plr.playerTile.x + 1 == boxes[i].position.x)) {
+                this->level[this->plr.playerTile.y][this->plr.playerTile.x + 1] = 2;
+
                 attachedBoxes.push_back(&this->boxes[i]);
+
             }
         }
     }
