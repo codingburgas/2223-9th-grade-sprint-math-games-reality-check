@@ -36,6 +36,9 @@
     <ClCompile Include="CPPs\CustomLock.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="CPPs\flag.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="HPPs\game.h">
@@ -60,6 +63,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="HPPs\CustomLock.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="HPPs\flag.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

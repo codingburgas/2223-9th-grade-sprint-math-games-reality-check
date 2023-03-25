@@ -9,7 +9,7 @@ class Player
 		void draw(RenderWindow& window);
 		void updatePos();
 		void setPosition(Vector2f position);
-		Vector2u playerTile;
+		Vector2i playerTile;
 	private:
 		Texture playerTexture;
 		Sprite playerSprite;

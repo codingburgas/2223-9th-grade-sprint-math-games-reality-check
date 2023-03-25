@@ -15,12 +15,16 @@ game::game(Vector2u size, string title) {
     this->voidTexture.loadFromFile("./Assets/void.png");
     this->wallTexture.loadFromFile("./Assets/wall.png");
     this->floorTexture.loadFromFile("./Assets/floor.png");
+    this->flagTexture.loadFromFile("./Assets/Flag.png");
     this->box0Texture.loadFromFile("./Assets/Box0.png");
     this->box1Texture.loadFromFile("./Assets/Box1.png");
-    this->plrTexture.loadFromFile("./Assets/ORoperator.png");
     this->mainMenuTexture.loadFromFile("./Assets/mainMenu.png");
     this->lock0Texture.loadFromFile("./Assets/Lock0.png");
     this->lock1Texture.loadFromFile("./Assets/Lock1.png");
+    this->plrTexture.loadFromFile("./Assets/ANDoperator.png");
+    this->ANDTexture.loadFromFile("./Assets/ANDoperator.png");
+    this->ORTexture.loadFromFile("./Assets/ORoperator.png");
+    this->XORTexture.loadFromFile("./Assets/XORoperator.png");
     
     // 0 - void
     // 1 - stena
@@ -31,7 +35,7 @@ game::game(Vector2u size, string title) {
     // 6 - kutiya 0
     // 7 - kutiya 1
 
-    textureMap = {
+    this->textureMap = {
         {0, this->voidTexture},
         {1, this->wallTexture},
         {2, this->floorTexture},
@@ -41,16 +45,26 @@ game::game(Vector2u size, string title) {
         {7, this->box1Texture}
     };
 
+    this->plrTextures = {
+        {0, this->ANDTexture},
+        {1, this->ORTexture},
+        {2, this->XORTexture}
+    };
+
+    this->currentLevel = 2;
     loadLevel("1");
     this->plr.setTexture(plrTexture);
     this->plr.setPosition(Vector2f(640, 240));
 
     this->canMove = true;
+    this->flag.setProperties(flagTexture, 11, 0.09);
     //MainMenu mainMenu(mainMenuTexture, Vector2f(0,0), window);
     update();
 };
 
 void game::loadLevel(string level) {
+    cout << "c" << endl;
+
     fstream file("./Maps/maps.json");
     json data = json::parse(file);
 
@@ -61,6 +75,15 @@ void game::loadLevel(string level) {
 
         for (int j = 0; j < 16; j++) {
             if (this->level[i][j] < 3) {
+                Tile tile;
+                tile.setTexture(textureMap[this->level[i][j]]);
+                tile.setPosition(Vector2f(j * 80.f, i * 80.f));
+
+                this->tiles[i].push_back(tile);
+            }
+            else if (this->level[i][j] == 3) {
+                this->flag.setPosition(Vector2f(j * 80.f, i * 80.f));
+                
                 Tile tile;
                 tile.setTexture(textureMap[this->level[i][j]]);
                 tile.setPosition(Vector2f(j * 80.f, i * 80.f));
@@ -106,8 +129,20 @@ void game::loadLevel(string level) {
 
                 this->boxes.push_back(box);
             }
+            else if (this->level[i][j] == 8) {
+                Tile tile;
+                tile.setTexture(textureMap[2]);
+                tile.setPosition(Vector2f(j * 80.f, i * 80.f));
+
+                this->tiles[i].push_back(tile);
+
+                this->plr.setPosition(Vector2f(j * 80.f, i * 80.f));
+            }
         }
     }
+    this->plrTexture.update(this->plrTextures[this->level[9][0]]);
+
+
 }
 
 void game::drawWindow()
@@ -119,6 +154,9 @@ void game::drawWindow()
             this->tiles[i][j].draw(this->window);
         }
     }
+    
+    this->flag.update(this->dt);
+    this->flag.draw(window);
     
     for (int i = 0; i < boxes.size(); i++) {
         this->boxes[i].draw(this->window);
@@ -132,7 +170,10 @@ void game::drawWindow()
         }
     }
 
+
     this->window.display();
+
+    this->dt = clock.restart();
 }
 
 void game::update()
@@ -156,12 +197,12 @@ void game::update()
 void game::processKeyPressed() {
     if (this->event.key.code == Keyboard::A) {
         if (this->plr.playerTile.x - 1 >= 0) {
-            if (this->level[this->plr.playerTile.y][this->plr.playerTile.x - 1] == 2) {
+            if (this->level[this->plr.playerTile.y][this->plr.playerTile.x - 1] == 2 || this->level[this->plr.playerTile.y][this->plr.playerTile.x - 1] == 3) {
                 for (int i = 0; i < attachedBoxes.size(); i++) {
                     if (this->attachedBoxes[i]->position.x - 1 >= 0) {
-                        if (this->level[this->attachedBoxes[i]->position.y][this->attachedBoxes[i]->position.x - 1] == 2) {
+                        if (this->level[this->attachedBoxes[i]->position.y][this->attachedBoxes[i]->position.x - 1] == 2 || this->level[this->attachedBoxes[i]->position.y][this->attachedBoxes[i]->position.x - 1] == 3) {
                             this->level[this->attachedBoxes[i]->position.y][this->attachedBoxes[i]->position.x] = 2;
-                                
+
                             canMove = true;
                         }
                         else {
@@ -179,10 +220,10 @@ void game::processKeyPressed() {
     }
     else if (this->event.key.code == Keyboard::D) {
         if (this->plr.playerTile.x + 1 <= 15) {
-            if (this->level[this->plr.playerTile.y][this->plr.playerTile.x + 1] == 2) {
+            if (this->level[this->plr.playerTile.y][this->plr.playerTile.x + 1] == 2 || this->level[this->plr.playerTile.y][this->plr.playerTile.x + 1] == 3) {
                 for (int i = 0; i < attachedBoxes.size(); i++) {
                     if (this->attachedBoxes[i]->position.x + 1 <= 15) {
-                        if (this->level[this->attachedBoxes[i]->position.y][this->attachedBoxes[i]->position.x + 1] == 2) {
+                        if (this->level[this->attachedBoxes[i]->position.y][this->attachedBoxes[i]->position.x + 1] == 2 || this->level[this->attachedBoxes[i]->position.y][this->attachedBoxes[i]->position.x + 1] == 3) {
                             this->level[this->attachedBoxes[i]->position.y][this->attachedBoxes[i]->position.x] = 2;
                                 
                             canMove = true;
@@ -202,10 +243,10 @@ void game::processKeyPressed() {
     }
     else if (this->event.key.code == Keyboard::S) {
         if (this->plr.playerTile.y + 1 <= 8) {
-            if (this->level[this->plr.playerTile.y + 1][this->plr.playerTile.x] == 2) {
+            if (this->level[this->plr.playerTile.y + 1][this->plr.playerTile.x] == 2 || this->level[this->plr.playerTile.y + 1][this->plr.playerTile.x] == 3) {
                 for (int i = 0; i < attachedBoxes.size(); i++) {
                     if (this->attachedBoxes[i]->position.y + 1 <= 8) {
-                        if (this->level[this->attachedBoxes[i]->position.y + 1][this->attachedBoxes[i]->position.x] == 2) {
+                        if (this->level[this->attachedBoxes[i]->position.y + 1][this->attachedBoxes[i]->position.x] == 2 || this->level[this->attachedBoxes[i]->position.y + 1][this->attachedBoxes[i]->position.x] == 3) {
                             this->level[this->attachedBoxes[i]->position.y][this->attachedBoxes[i]->position.x] = 2;
 
                             canMove = true;
@@ -225,12 +266,11 @@ void game::processKeyPressed() {
         }
     }
     else if (this->event.key.code == Keyboard::W) {
-
         if (this->plr.playerTile.y - 1 >= 0) {
-            if (this->level[this->plr.playerTile.y - 1][this->plr.playerTile.x] == 2) {
+            if (this->level[this->plr.playerTile.y - 1][this->plr.playerTile.x] == 2 || this->level[this->plr.playerTile.y - 1][this->plr.playerTile.x] == 3) {
                 for (int i = 0; i < attachedBoxes.size(); i++) {
                     if (this->attachedBoxes[i]->position.y - 1 >= 0) {
-                        if (this->level[this->attachedBoxes[i]->position.y - 1][this->attachedBoxes[i]->position.x] == 2) {
+                        if (this->level[this->attachedBoxes[i]->position.y - 1][this->attachedBoxes[i]->position.x] == 2 || this->level[this->attachedBoxes[i]->position.y - 1][this->attachedBoxes[i]->position.x] == 3) {
                             this->level[this->attachedBoxes[i]->position.y][this->attachedBoxes[i]->position.x] = 2;
 
                             canMove = true;
@@ -253,6 +293,31 @@ void game::processKeyPressed() {
     }
     else if (this->event.key.code == Keyboard::Q) {
         rotateQ();
+    }
+
+    if (this->level[this->plr.playerTile.y][this->plr.playerTile.x] == 3) {
+        this->level.clear();
+        this->boxes.clear();
+        this->locks.clear();
+        this->tiles.clear();
+        this->attachedBoxes.clear();
+        currentLevel++;
+        return loadLevel(to_string(currentLevel));
+    }
+    else {
+        for (int i = 0; i < attachedBoxes.size(); i++) {
+            if (this->attachedBoxes[i]->position == this->flag.position) {
+                this->level.clear();
+                this->boxes.clear();
+                this->locks.clear();
+                this->tiles.clear();
+                this->attachedBoxes.clear();
+                currentLevel++;
+                return loadLevel(to_string(currentLevel));
+                break;
+            }
+        }
+
     }
 
     checkForAdjacentBoxes();

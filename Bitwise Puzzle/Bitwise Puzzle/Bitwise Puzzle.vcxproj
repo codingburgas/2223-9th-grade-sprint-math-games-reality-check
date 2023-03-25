@@ -135,6 +135,7 @@
   <ItemGroup>
     <ClCompile Include="CPPs\box.cpp" />
     <ClCompile Include="CPPs\CustomLock.cpp" />
+    <ClCompile Include="CPPs\flag.cpp" />
     <ClCompile Include="CPPs\mainMenu.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="CPPs\game.cpp" />
@@ -144,6 +145,7 @@
   <ItemGroup>
     <ClInclude Include="HPPs\box.hpp" />
     <ClInclude Include="HPPs\CustomLock.hpp" />
+    <ClInclude Include="HPPs\flag.hpp" />
     <ClInclude Include="HPPs\game.h" />
     <ClInclude Include="HPPs\json.hpp" />
     <ClInclude Include="HPPs\mainMenu.h" />
