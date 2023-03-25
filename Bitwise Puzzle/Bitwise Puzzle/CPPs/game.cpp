@@ -10,6 +10,7 @@ using json = nlohmann::json;
 game::game(Vector2u size, string title) {
     this->window.create(VideoMode(size.x, size.y), title);
 	this->window.setFramerateLimit(60);
+    this->window.setKeyRepeatEnabled(false);
 
     this->voidTexture.loadFromFile("./Assets/void.png");
     this->wallTexture.loadFromFile("./Assets/wall.png");
@@ -247,6 +248,12 @@ void game::processKeyPressed() {
             }
         }
     }
+    else if (this->event.key.code == Keyboard::E) {
+        rotateE();
+    }
+    else if (this->event.key.code == Keyboard::Q) {
+        rotateQ();
+    }
 
     checkForAdjacentBoxes();
 }
@@ -348,7 +355,6 @@ void game::checkForAdjacentBoxes() {
 }
 
 void game::checkForUnlock() {
-
     for (int i = 0; i < this->locks.size(); i++) {
         for (int j = 0; j < this->attachedBoxes.size(); j += 2) {
             if (j + 1 < this->attachedBoxes.size()) {
@@ -371,4 +377,128 @@ void game::checkForUnlock() {
             }
         }
     }
+}
+
+void game::rotateE() {
+    bool broke = false;
+
+    for (int i = 0; i < this->attachedBoxes.size(); i++) {
+        if (this->attachedBoxes[i]->position.y != this->plr.playerTile.y) {
+            if (this->attachedBoxes[i]->position.y < this->plr.playerTile.y) {
+                if (this->attachedBoxes[i]->position.x + 1 <= 15) {
+                    if (this->level[this->attachedBoxes[i]->position.y][this->attachedBoxes[i]->position.x + 1] == 2 && this->level[this->attachedBoxes[i]->position.y + 1][this->attachedBoxes[i]->position.x + 1] == 2) {
+                        this->positions.push_back(Vector2f((this->attachedBoxes[i]->position.x + 1) * 80, (this->attachedBoxes[i]->position.y + 1) * 80));
+                    }
+                    else {
+                        broke = true;
+                        break;
+                    }
+                }
+            }
+            else {
+                if (this->attachedBoxes[i]->position.x - 1 >= 0) {
+                    if (this->level[this->attachedBoxes[i]->position.y][this->attachedBoxes[i]->position.x - 1] == 2 && this->level[this->attachedBoxes[i]->position.y - 1][this->attachedBoxes[i]->position.x - 1] == 2) {
+                        this->positions.push_back(Vector2f((this->attachedBoxes[i]->position.x - 1) * 80, (this->attachedBoxes[i]->position.y - 1) * 80));
+                    }
+                    else {
+                        broke = true;
+                        break;
+                    }
+                }
+            }
+        }
+        else {
+            if (this->attachedBoxes[i]->position.x < this->plr.playerTile.x) {
+                if (this->attachedBoxes[i]->position.y - 1 >= 0) {
+                    if (this->level[this->attachedBoxes[i]->position.y - 1][this->attachedBoxes[i]->position.x] == 2 && this->level[this->attachedBoxes[i]->position.y - 1][this->attachedBoxes[i]->position.x + 1] == 2) {
+                        this->positions.push_back(Vector2f((this->attachedBoxes[i]->position.x + 1) * 80, (this->attachedBoxes[i]->position.y - 1) * 80));
+                    }
+                    else {
+                        broke = true;
+                        break;
+                    }
+                }
+            }
+            else {
+                if (this->attachedBoxes[i]->position.y + 1 <= 15) {
+                    if (this->level[this->attachedBoxes[i]->position.y + 1][this->attachedBoxes[i]->position.x] == 2 && this->level[this->attachedBoxes[i]->position.y + 1][this->attachedBoxes[i]->position.x - 1] == 2) {
+                        this->positions.push_back(Vector2f((this->attachedBoxes[i]->position.x - 1) * 80, (this->attachedBoxes[i]->position.y + 1) * 80));
+                    }
+                    else {
+                        broke = true;
+                        break;
+                    }
+                }
+            }
+        }
+    }
+
+    if (!broke) {
+        for (int i = 0; i < attachedBoxes.size(); i++) {
+            this->attachedBoxes[i]->setPosition(this->positions[i]);
+        }
+    }
+    this->positions.clear();
+}
+
+void game::rotateQ() {
+    bool broke = false;
+
+    for (int i = 0; i < this->attachedBoxes.size(); i++) {
+        if (this->attachedBoxes[i]->position.y != this->plr.playerTile.y) {
+            if (this->attachedBoxes[i]->position.y < this->plr.playerTile.y) {
+                if (this->attachedBoxes[i]->position.x - 1 >= 0) {
+                    if (this->level[this->attachedBoxes[i]->position.y][this->attachedBoxes[i]->position.x - 1] == 2 && this->level[this->attachedBoxes[i]->position.y + 1][this->attachedBoxes[i]->position.x - 1] == 2) {
+                        this->positions.push_back(Vector2f((this->attachedBoxes[i]->position.x - 1) * 80, (this->attachedBoxes[i]->position.y + 1) * 80));
+                    }
+                    else {
+                        broke = true;
+                        break;
+                    }
+                }
+            }
+            else {
+                if (this->attachedBoxes[i]->position.x + 1 <= 15) {
+                    if (this->level[this->attachedBoxes[i]->position.y][this->attachedBoxes[i]->position.x + 1] == 2 && this->level[this->attachedBoxes[i]->position.y - 1][this->attachedBoxes[i]->position.x + 1] == 2) {
+                        this->positions.push_back(Vector2f((this->attachedBoxes[i]->position.x + 1) * 80, (this->attachedBoxes[i]->position.y - 1) * 80));
+                    }
+                    else {
+                        broke = true;
+                        break;
+                    }
+                }
+            }
+        }
+        else {
+            if (this->attachedBoxes[i]->position.x < this->plr.playerTile.x) {
+                if (this->attachedBoxes[i]->position.y + 1 <= 15) {
+                    if (this->level[this->attachedBoxes[i]->position.y + 1][this->attachedBoxes[i]->position.x] == 2 && this->level[this->attachedBoxes[i]->position.y + 1][this->attachedBoxes[i]->position.x + 1] == 2) {
+                        this->positions.push_back(Vector2f((this->attachedBoxes[i]->position.x + 1) * 80, (this->attachedBoxes[i]->position.y + 1) * 80));
+                    }
+                    else {
+                        broke = true;
+                        break;
+                    }
+                }
+            }
+            else {
+                if (this->attachedBoxes[i]->position.y - 1 >= 0) {
+                    if (this->level[this->attachedBoxes[i]->position.y - 1][this->attachedBoxes[i]->position.x] == 2 && this->level[this->attachedBoxes[i]->position.y - 1][this->attachedBoxes[i]->position.x - 1] == 2) {
+                        this->positions.push_back(Vector2f((this->attachedBoxes[i]->position.x - 1) * 80, (this->attachedBoxes[i]->position.y - 1) * 80));
+                    }
+                    else {
+                        broke = true;
+                        break;
+                    }
+                }
+            }
+        }
+    }
+
+    if (!broke) {
+        for (int i = 0; i < attachedBoxes.size(); i++) {
+            this->attachedBoxes[i]->setPosition(this->positions[i]);
+        }
+    }
+    this->positions.clear();
 }

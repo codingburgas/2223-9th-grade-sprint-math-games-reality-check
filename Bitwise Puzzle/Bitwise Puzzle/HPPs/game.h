@@ -15,6 +15,8 @@ public:
 	void loadLevel(string level);
 	void checkForAdjacentBoxes();
 	void checkForUnlock();
+	void rotateE();
+	void rotateQ();
 private:
 	RenderWindow window;
 	Texture voidTexture;
@@ -34,6 +36,7 @@ private:
 	vector<CustomLock> locks;
 	vector<vector<int>> level;
 	vector<vector<Tile>> tiles;
+	vector<Vector2f> positions;
 
 	bool canMove;
 };
