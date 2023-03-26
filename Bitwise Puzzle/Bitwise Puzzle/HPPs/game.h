@@ -16,6 +16,7 @@ public:
 	void loadLevel(string level);
 	void checkForAdjacentBoxes();
 	void checkForUnlock();
+	void animateBoxRotation(char key);
 	void rotateE();
 	void rotateQ();
 private:

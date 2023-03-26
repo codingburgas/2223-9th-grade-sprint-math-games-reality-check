@@ -54,7 +54,6 @@ game::game(Vector2u size, string title) {
     this->currentLevel = 2;
     loadLevel("1");
     this->plr.setTexture(plrTexture);
-    this->plr.setPosition(Vector2f(640, 240));
 
     this->canMove = true;
     this->flag.setProperties(flagTexture, 11, 0.09);
@@ -63,8 +62,6 @@ game::game(Vector2u size, string title) {
 };
 
 void game::loadLevel(string level) {
-    cout << "c" << endl;
-
     fstream file("./Maps/maps.json");
     json data = json::parse(file);
 
@@ -137,6 +134,7 @@ void game::loadLevel(string level) {
                 this->tiles[i].push_back(tile);
 
                 this->plr.setPosition(Vector2f(j * 80.f, i * 80.f));
+                this->level[i][j] = 2;
             }
         }
     }
@@ -444,6 +442,72 @@ void game::checkForUnlock() {
     }
 }
 
+
+void game::animateBoxRotation(char key) {
+    // 0 - starts from left side
+    // 1 - starts from top side
+    // 2 - starts from right side
+    // 3 - starts from bottom
+
+    vector<int> pos;
+
+    for (int i = 0; i < this->positions.size(); i++) {
+        pos.push_back(int());
+        if (this->attachedBoxes[i]->position.y == this->plr.playerTile.y) {
+            for (int j = 0; j < 4; j++) {
+                drawWindow();
+                if (key == 'e') {
+                    this->attachedBoxes[i]->move(Vector2f(0, this->positions[i].y / 4));
+                    pos[i] = 0;
+                }
+                else {
+                    this->attachedBoxes[i]->move(Vector2f(0, -this->positions[i].y / 4));
+                    pos[i] = 2;
+                }
+            }
+        }
+        else {
+            for (int j = 0; j < 4; j++) {
+                drawWindow();
+                if (key == 'e') {
+                    this->attachedBoxes[i]->move(Vector2f(this->positions[i].x / 4, 0));
+                    pos[i] = 1;
+                }
+                else {
+                    this->attachedBoxes[i]->move(Vector2f(-this->positions[i].x / 4, 0));
+                    pos[i] = 3;
+                }
+            }
+        }
+    }
+
+    for (int i = 0; i < this->positions.size(); i++) {
+        if (pos[i] == 1 || pos[i] == 3) {
+            for (int j = 0; j < 4; j++) {
+                drawWindow();
+                if (key == 'e') {
+                    this->attachedBoxes[i]->move(Vector2f(0, this->positions[i].y / 4));
+                }
+                else {
+                    this->attachedBoxes[i]->move(Vector2f(0, -this->positions[i].y / 4));
+                }
+            }
+        }
+        else {
+            for (int j = 0; j < 4; j++) {
+                drawWindow();
+                if (key == 'e') {
+                    this->attachedBoxes[i]->move(Vector2f(this->positions[i].x / 4, 0));
+                }
+                else {
+                    this->attachedBoxes[i]->move(Vector2f(-this->positions[i].x / 4, 0));
+                }
+            }
+        }
+    }
+}
+
+
 void game::rotateE() {
     bool broke = false;
 
@@ -452,7 +516,7 @@ void game::rotateE() {
             if (this->attachedBoxes[i]->position.y < this->plr.playerTile.y) {
                 if (this->attachedBoxes[i]->position.x + 1 <= 15) {
                     if (this->level[this->attachedBoxes[i]->position.y][this->attachedBoxes[i]->position.x + 1] == 2 && this->level[this->attachedBoxes[i]->position.y + 1][this->attachedBoxes[i]->position.x + 1] == 2) {
-                        this->positions.push_back(Vector2f((this->attachedBoxes[i]->position.x + 1) * 80, (this->attachedBoxes[i]->position.y + 1) * 80));
+                        this->positions.push_back(Vector2f((this->attachedBoxes[i]->position.x + 1) * 80 - this->attachedBoxes[i]->position.x * 80.f, (this->attachedBoxes[i]->position.y + 1) * 80 - this->attachedBoxes[i]->position.y * 80.f));
                     }
                     else {
                         broke = true;
@@ -463,7 +527,7 @@ void game::rotateE() {
             else {
                 if (this->attachedBoxes[i]->position.x - 1 >= 0) {
                     if (this->level[this->attachedBoxes[i]->position.y][this->attachedBoxes[i]->position.x - 1] == 2 && this->level[this->attachedBoxes[i]->position.y - 1][this->attachedBoxes[i]->position.x - 1] == 2) {
-                        this->positions.push_back(Vector2f((this->attachedBoxes[i]->position.x - 1) * 80, (this->attachedBoxes[i]->position.y - 1) * 80));
+                        this->positions.push_back(Vector2f((this->attachedBoxes[i]->position.x - 1) * 80 - this->attachedBoxes[i]->position.x * 80.f, (this->attachedBoxes[i]->position.y - 1) * 80 - this->attachedBoxes[i]->position.y * 80.f));
                     }
                     else {
                         broke = true;
@@ -476,7 +540,7 @@ void game::rotateE() {
             if (this->attachedBoxes[i]->position.x < this->plr.playerTile.x) {
                 if (this->attachedBoxes[i]->position.y - 1 >= 0) {
                     if (this->level[this->attachedBoxes[i]->position.y - 1][this->attachedBoxes[i]->position.x] == 2 && this->level[this->attachedBoxes[i]->position.y - 1][this->attachedBoxes[i]->position.x + 1] == 2) {
-                        this->positions.push_back(Vector2f((this->attachedBoxes[i]->position.x + 1) * 80, (this->attachedBoxes[i]->position.y - 1) * 80));
+                        this->positions.push_back(Vector2f((this->attachedBoxes[i]->position.x + 1) * 80 - this->attachedBoxes[i]->position.x * 80.f, (this->attachedBoxes[i]->position.y - 1) * 80 - this->attachedBoxes[i]->position.y * 80.f));
                     }
                     else {
                         broke = true;
@@ -487,7 +551,7 @@ void game::rotateE() {
             else {
                 if (this->attachedBoxes[i]->position.y + 1 <= 15) {
                     if (this->level[this->attachedBoxes[i]->position.y + 1][this->attachedBoxes[i]->position.x] == 2 && this->level[this->attachedBoxes[i]->position.y + 1][this->attachedBoxes[i]->position.x - 1] == 2) {
-                        this->positions.push_back(Vector2f((this->attachedBoxes[i]->position.x - 1) * 80, (this->attachedBoxes[i]->position.y + 1) * 80));
+                        this->positions.push_back(Vector2f((this->attachedBoxes[i]->position.x - 1) * 80 - this->attachedBoxes[i]->position.x * 80.f, (this->attachedBoxes[i]->position.y + 1) * 80 - this->attachedBoxes[i]->position.y * 80.f));
                     }
                     else {
                         broke = true;
@@ -499,9 +563,7 @@ void game::rotateE() {
     }
 
     if (!broke) {
-        for (int i = 0; i < attachedBoxes.size(); i++) {
-            this->attachedBoxes[i]->setPosition(this->positions[i]);
-        }
+        animateBoxRotation('e');
     }
     this->positions.clear();
 }
@@ -514,7 +576,7 @@ void game::rotateQ() {
             if (this->attachedBoxes[i]->position.y < this->plr.playerTile.y) {
                 if (this->attachedBoxes[i]->position.x - 1 >= 0) {
                     if (this->level[this->attachedBoxes[i]->position.y][this->attachedBoxes[i]->position.x - 1] == 2 && this->level[this->attachedBoxes[i]->position.y + 1][this->attachedBoxes[i]->position.x - 1] == 2) {
-                        this->positions.push_back(Vector2f((this->attachedBoxes[i]->position.x - 1) * 80, (this->attachedBoxes[i]->position.y + 1) * 80));
+                        this->positions.push_back(Vector2f(-((this->attachedBoxes[i]->position.x - 1) * 80 - this->attachedBoxes[i]->position.x * 80.f), -((this->attachedBoxes[i]->position.y + 1) * 80 - this->attachedBoxes[i]->position.y * 80.f)));
                     }
                     else {
                         broke = true;
@@ -525,7 +587,7 @@ void game::rotateQ() {
             else {
                 if (this->attachedBoxes[i]->position.x + 1 <= 15) {
                     if (this->level[this->attachedBoxes[i]->position.y][this->attachedBoxes[i]->position.x + 1] == 2 && this->level[this->attachedBoxes[i]->position.y - 1][this->attachedBoxes[i]->position.x + 1] == 2) {
-                        this->positions.push_back(Vector2f((this->attachedBoxes[i]->position.x + 1) * 80, (this->attachedBoxes[i]->position.y - 1) * 80));
+                        this->positions.push_back(Vector2f(-((this->attachedBoxes[i]->position.x + 1) * 80 - this->attachedBoxes[i]->position.x * 80.f), -((this->attachedBoxes[i]->position.y - 1) * 80 - this->attachedBoxes[i]->position.y * 80.f)));
                     }
                     else {
                         broke = true;
@@ -538,7 +600,7 @@ void game::rotateQ() {
             if (this->attachedBoxes[i]->position.x < this->plr.playerTile.x) {
                 if (this->attachedBoxes[i]->position.y + 1 <= 15) {
                     if (this->level[this->attachedBoxes[i]->position.y + 1][this->attachedBoxes[i]->position.x] == 2 && this->level[this->attachedBoxes[i]->position.y + 1][this->attachedBoxes[i]->position.x + 1] == 2) {
-                        this->positions.push_back(Vector2f((this->attachedBoxes[i]->position.x + 1) * 80, (this->attachedBoxes[i]->position.y + 1) * 80));
+                        this->positions.push_back(Vector2f(-((this->attachedBoxes[i]->position.x + 1) * 80 - this->attachedBoxes[i]->position.x * 80.f), -((this->attachedBoxes[i]->position.y + 1) * 80 - this->attachedBoxes[i]->position.y * 80.f)));
                     }
                     else {
                         broke = true;
@@ -549,7 +611,7 @@ void game::rotateQ() {
             else {
                 if (this->attachedBoxes[i]->position.y - 1 >= 0) {
                     if (this->level[this->attachedBoxes[i]->position.y - 1][this->attachedBoxes[i]->position.x] == 2 && this->level[this->attachedBoxes[i]->position.y - 1][this->attachedBoxes[i]->position.x - 1] == 2) {
-                        this->positions.push_back(Vector2f((this->attachedBoxes[i]->position.x - 1) * 80, (this->attachedBoxes[i]->position.y - 1) * 80));
+                        this->positions.push_back(Vector2f(-((this->attachedBoxes[i]->position.x - 1) * 80 - this->attachedBoxes[i]->position.x * 80.f), -((this->attachedBoxes[i]->position.y - 1) * 80 - this->attachedBoxes[i]->position.y * 80.f)));
                     }
                     else {
                         broke = true;
@@ -561,9 +623,7 @@ void game::rotateQ() {
     }
 
     if (!broke) {
-        for (int i = 0; i < attachedBoxes.size(); i++) {
-            this->attachedBoxes[i]->setPosition(this->positions[i]);
-        }
+        animateBoxRotation('q');
     }
     this->positions.clear();
 }
