@@ -1,5 +1,5 @@
 #pragma once
-#include "precompile.h";
+#include "precompile.hpp";
 
 class Player
 {

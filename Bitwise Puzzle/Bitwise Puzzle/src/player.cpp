@@ -1,4 +1,4 @@
-#include "player.h";
+#include "player.hpp";
 
 void Player::setTexture(Texture playerTexture) {
 	this->playerTexture.swap(playerTexture);

@@ -1,4 +1,4 @@
-#include "precompile.h"
+#include "precompile.hpp"
 
 class Tile {
 private:

@@ -1,4 +1,4 @@
-#include "mainMenu.h"
+#include "mainMenu.hpp"
 
 MainMenu::MainMenu(Vector2f position, RenderWindow& window)
 {

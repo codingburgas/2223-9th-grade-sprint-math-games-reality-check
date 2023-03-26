@@ -15,57 +15,57 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp">
+    <ClCompile Include="src\box.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="CPPs\game.cpp">
+    <ClCompile Include="src\CustomLock.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="CPPs\player.cpp">
+    <ClCompile Include="src\flag.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="CPPs\tile.cpp">
+    <ClCompile Include="src\game.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="CPPs\mainMenu.cpp">
+    <ClCompile Include="src\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="CPPs\box.cpp">
+    <ClCompile Include="src\mainMenu.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="CPPs\CustomLock.cpp">
+    <ClCompile Include="src\player.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="CPPs\flag.cpp">
+    <ClCompile Include="src\tile.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="HPPs\game.h">
+    <ClInclude Include="includes\box.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="HPPs\precompile.h">
+    <ClInclude Include="includes\CustomLock.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="HPPs\player.h">
+    <ClInclude Include="includes\flag.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="HPPs\tile.hpp">
+    <ClInclude Include="includes\game.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="HPPs\mainMenu.h">
+    <ClInclude Include="includes\json.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="HPPs\json.hpp">
+    <ClInclude Include="includes\mainMenu.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="HPPs\box.hpp">
+    <ClInclude Include="includes\player.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="HPPs\CustomLock.hpp">
+    <ClInclude Include="includes\precompile.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="HPPs\flag.hpp">
+    <ClInclude Include="includes\tile.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

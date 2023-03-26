@@ -1,4 +1,4 @@
-#include "game.h"
+#include "game.hpp"
 #include <map>
 #include "json.hpp"
 #include <fstream>
@@ -12,9 +12,9 @@ game::game(Vector2u size, string title) {
 	this->window.setFramerateLimit(60);
     this->window.setKeyRepeatEnabled(false);
 
-    this->voidTexture.loadFromFile("./Assets/void.png");
-    this->wallTexture.loadFromFile("./Assets/wall.png");
-    this->floorTexture.loadFromFile("./Assets/floor.png");
+    this->voidTexture.loadFromFile("./Assets/Void.png");
+    this->wallTexture.loadFromFile("./Assets/Wall.png");
+    this->floorTexture.loadFromFile("./Assets/Floor.png");
     this->flagTexture.loadFromFile("./Assets/Flag.png");
     this->box0Texture.loadFromFile("./Assets/Box0.png");
     this->box1Texture.loadFromFile("./Assets/Box1.png");
@@ -24,15 +24,6 @@ game::game(Vector2u size, string title) {
     this->ANDTexture.loadFromFile("./Assets/ANDoperator.png");
     this->ORTexture.loadFromFile("./Assets/ORoperator.png");
     this->XORTexture.loadFromFile("./Assets/XORoperator.png");
-    
-    // 0 - void
-    // 1 - stena
-    // 2 - pod
-    // 3 - flagche
-    // 4 - klyuchalka 0
-    // 5 - klyuchalka 1
-    // 6 - kutiya 0
-    // 7 - kutiya 1
 
     this->textureMap = {
         {0, this->voidTexture},

@@ -18,6 +18,27 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\box.cpp" />
+    <ClCompile Include="src\CustomLock.cpp" />
+    <ClCompile Include="src\flag.cpp" />
+    <ClCompile Include="src\game.cpp" />
+    <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\mainMenu.cpp" />
+    <ClCompile Include="src\player.cpp" />
+    <ClCompile Include="src\tile.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="includes\box.hpp" />
+    <ClInclude Include="includes\CustomLock.hpp" />
+    <ClInclude Include="includes\flag.hpp" />
+    <ClInclude Include="includes\game.hpp" />
+    <ClInclude Include="includes\json.hpp" />
+    <ClInclude Include="includes\mainMenu.hpp" />
+    <ClInclude Include="includes\player.hpp" />
+    <ClInclude Include="includes\precompile.hpp" />
+    <ClInclude Include="includes\tile.hpp" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
@@ -76,7 +97,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>SFML_STATIC;WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)SFML\include;$(SolutionDir)Bitwise Puzzle\HPPs</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)SFML\include;$(SolutionDir)Bitwise Puzzle\includes</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -93,7 +114,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>SFML_STATIC;WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)SFML\include;$(SolutionDir)Bitwise Puzzle\HPPs</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)SFML\include;$(SolutionDir)Bitwise Puzzle\includes</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -132,27 +153,6 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClCompile Include="CPPs\box.cpp" />
-    <ClCompile Include="CPPs\CustomLock.cpp" />
-    <ClCompile Include="CPPs\flag.cpp" />
-    <ClCompile Include="CPPs\mainMenu.cpp" />
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="CPPs\game.cpp" />
-    <ClCompile Include="CPPs\player.cpp" />
-    <ClCompile Include="CPPs\tile.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="HPPs\box.hpp" />
-    <ClInclude Include="HPPs\CustomLock.hpp" />
-    <ClInclude Include="HPPs\flag.hpp" />
-    <ClInclude Include="HPPs\game.h" />
-    <ClInclude Include="HPPs\json.hpp" />
-    <ClInclude Include="HPPs\mainMenu.h" />
-    <ClInclude Include="HPPs\player.h" />
-    <ClInclude Include="HPPs\precompile.h" />
-    <ClInclude Include="HPPs\tile.hpp" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
