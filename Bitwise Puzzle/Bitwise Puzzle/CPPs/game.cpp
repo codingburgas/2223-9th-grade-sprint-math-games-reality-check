@@ -55,6 +55,7 @@ game::game(Vector2u size, string title) {
     this->plr.setTexture(plrTexture);
 
     this->canMove = true;
+    this->windowShouldClose = false;
     this->flag.setProperties(flagTexture, 11, 0.09);
     MainMenu mainMenu(Vector2f(0,0), window);
     update();
@@ -64,7 +65,15 @@ void game::loadLevel(string level) {
     fstream file("./Maps/maps.json");
     json data = json::parse(file);
 
-    this->level = data[level];
+
+    if (data.contains(level)) {
+        this->level = data[level];
+    }
+    else {
+        this->window.close();
+        this->windowShouldClose = true;
+        return;
+    }
 
     for (int i = 0; i < 9; i++) {
         this->tiles.push_back(vector<Tile>());
@@ -79,7 +88,7 @@ void game::loadLevel(string level) {
             }
             else if (this->level[i][j] == 3) {
                 this->flag.setPosition(Vector2f(j * 80.f, i * 80.f));
-                
+
                 Tile tile;
                 tile.setTexture(textureMap[this->level[i][j]]);
                 tile.setPosition(Vector2f(j * 80.f, i * 80.f));
@@ -90,7 +99,7 @@ void game::loadLevel(string level) {
                 Tile tile;
                 tile.setTexture(textureMap[2]);
                 tile.setPosition(Vector2f(j * 80.f, i * 80.f));
-                
+
                 this->tiles[i].push_back(tile);
 
                 CustomLock lock;
@@ -109,7 +118,7 @@ void game::loadLevel(string level) {
                 Tile tile;
                 tile.setTexture(textureMap[2]);
                 tile.setPosition(Vector2f(j * 80.f, i * 80.f));
-                
+
                 this->tiles[i].push_back(tile);
 
                 Box box;
@@ -139,30 +148,33 @@ void game::loadLevel(string level) {
     }
     this->plrTexture.update(this->plrTextures[this->level[9][0]]);
     this->plr.setTexture(this->plrTexture);
+    
 }
 
 void game::drawWindow()
 {
     this->window.clear();
 
-    for (int i = 0; i < 9; i++) {
-        for (int j = 0; j < 16; j++) {
-            this->tiles[i][j].draw(this->window);
+    if (!this->windowShouldClose) {
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 16; j++) {
+                this->tiles[i][j].draw(this->window);
+            }
         }
-    }
     
-    this->flag.update(this->dt);
-    this->flag.draw(window);
+        this->flag.update(this->dt);
+        this->flag.draw(window);
     
-    for (int i = 0; i < boxes.size(); i++) {
-        this->boxes[i].draw(this->window);
-    }
+        for (int i = 0; i < boxes.size(); i++) {
+            this->boxes[i].draw(this->window);
+        }
 
-    this->plr.draw(this->window);
+        this->plr.draw(this->window);
 
-    for (int i = 0; i < locks.size(); i++) {
-        if (this->locks[i].drawable) {
-            this->locks[i].draw(this->window);
+        for (int i = 0; i < locks.size(); i++) {
+            if (this->locks[i].drawable) {
+                this->locks[i].draw(this->window);
+            }
         }
     }
 
@@ -289,6 +301,14 @@ void game::processKeyPressed() {
     }
     else if (this->event.key.code == Keyboard::Q) {
         rotateQ();
+    }
+    else if (this->event.key.code == Keyboard::R) {
+        this->level.clear();
+        this->boxes.clear();
+        this->locks.clear();
+        this->tiles.clear();
+        this->attachedBoxes.clear();
+        return loadLevel(to_string(currentLevel));
     }
 
     if (this->level[this->plr.playerTile.y][this->plr.playerTile.x] == 3) {
@@ -420,7 +440,21 @@ void game::checkForUnlock() {
         for (int j = 0; j < this->attachedBoxes.size(); j += 2) {
             if (j + 1 < this->attachedBoxes.size()) {
                 if (this->attachedBoxes[j]->position.y != this->plr.playerTile.y && this->attachedBoxes[j + 1]->position.y != this->plr.playerTile.y) {
-                    if (this->locks[i].value == (this->attachedBoxes[j]->value || this->attachedBoxes[j + 1]->value)) {
+                    if (this->level[9][0] == 0) {
+                        if (this->locks[i].value == (this->attachedBoxes[j]->value && this->attachedBoxes[j + 1]->value)) {
+                            this->level[this->locks[i].position.y][this->locks[i].position.x] = 2;
+                            thread t(&CustomLock::fadeOut, &this->locks[i]);
+                            t.detach();
+                            break;
+                        }
+                    }
+                    else if (this->locks[i].value == (this->attachedBoxes[j]->value || this->attachedBoxes[j + 1]->value)) {
+                        this->level[this->locks[i].position.y][this->locks[i].position.x] = 2;
+                        thread t(&CustomLock::fadeOut, &this->locks[i]);
+                        t.detach();
+                        break;
+                    }
+                    else if (!(this->locks[i].value == (this->attachedBoxes[j]->value || this->attachedBoxes[j + 1]->value))) {
                         this->level[this->locks[i].position.y][this->locks[i].position.x] = 2;
                         thread t(&CustomLock::fadeOut, &this->locks[i]);
                         t.detach();

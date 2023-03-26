@@ -49,5 +49,6 @@ private:
 	vector<Vector2f> positions;
 
 	bool canMove;
+	bool windowShouldClose;
 	int currentLevel;
 };
