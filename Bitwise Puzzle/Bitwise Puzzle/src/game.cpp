@@ -287,12 +287,15 @@ void game::processKeyPressed() {
             }
         }
     }
+    // if e pressed -> rotate clockwise
     else if (this->event.key.code == Keyboard::E) {
         rotateE();
     }
+    // if q pressed -> rotate anti-clockwise
     else if (this->event.key.code == Keyboard::Q) {
         rotateQ();
     }
+    // if r pressed -> reset level
     else if (this->event.key.code == Keyboard::R) {
         this->level.clear();
         this->boxes.clear();
@@ -302,6 +305,7 @@ void game::processKeyPressed() {
         return loadLevel(to_string(currentLevel));
     }
 
+    // upon crossing flag tile -> reset level
     if (this->level[this->plr.playerTile.y][this->plr.playerTile.x] == 3) {
         this->level.clear();
         this->boxes.clear();
@@ -327,9 +331,11 @@ void game::processKeyPressed() {
 
     }
 
+    // check for adjacent boxes after moving player
     checkForAdjacentBoxes();
 }
 
+// animate the player movement (including any attached boxes)
 void game::animatePlayerMovement(int xChange, int yChange) {
     if (xChange < 0) {
         for (int i = 0; i < 5; i++) {
@@ -369,10 +375,12 @@ void game::animatePlayerMovement(int xChange, int yChange) {
     }
 }
 
+// check for adjacent boxes in grid
 void game::checkForAdjacentBoxes() {
     bool attachedNewBox = false;
     if (this->plr.playerTile.y - 1 >= 0) {
         for (int i = 0; i < boxes.size(); i++) {
+            // check for box above
             if (this->level[this->plr.playerTile.y - 1][this->plr.playerTile.x] >= 6 && (this->plr.playerTile.y - 1 == boxes[i].position.y && this->plr.playerTile.x == boxes[i].position.x)) {
                 this->level[this->plr.playerTile.y - 1][this->plr.playerTile.x] = 2;
 
@@ -385,6 +393,7 @@ void game::checkForAdjacentBoxes() {
 
     if (this->plr.playerTile.y + 1 <= 8) {
         for (int i = 0; i < boxes.size(); i++) {
+            // check for box under
             if (this->level[this->plr.playerTile.y + 1][this->plr.playerTile.x] >= 6 && (this->plr.playerTile.y + 1 == boxes[i].position.y && this->plr.playerTile.x == boxes[i].position.x)) {
                 this->level[this->plr.playerTile.y + 1][this->plr.playerTile.x] = 2;
 
@@ -396,6 +405,7 @@ void game::checkForAdjacentBoxes() {
 
     if (this->plr.playerTile.x - 1 >= 0) {
         for (int i = 0; i < boxes.size(); i++) {
+            // check for box to the left
             if (this->level[this->plr.playerTile.y][this->plr.playerTile.x - 1] >= 6 && (this->plr.playerTile.y == boxes[i].position.y && this->plr.playerTile.x - 1 == boxes[i].position.x)) {
                 this->level[this->plr.playerTile.y][this->plr.playerTile.x - 1] = 2;
 
@@ -407,6 +417,7 @@ void game::checkForAdjacentBoxes() {
 
     if (this->plr.playerTile.y + 1 <= 15) {
         for (int i = 0; i < boxes.size(); i++) {
+            // check for boxx to the right
             if (this->level[this->plr.playerTile.y][this->plr.playerTile.x + 1] >= 6 && (this->plr.playerTile.y == boxes[i].position.y && this->plr.playerTile.x + 1 == boxes[i].position.x)) {
                 this->level[this->plr.playerTile.y][this->plr.playerTile.x + 1] = 2;
 
@@ -416,6 +427,7 @@ void game::checkForAdjacentBoxes() {
         }
     }
 
+    // sort attached boxes vector and check if unlock conditions are met
     if (attachedNewBox && this->attachedBoxes.size() > 1) {
         sort(this->attachedBoxes.begin(), this->attachedBoxes.end(), [](const Box* box1, const Box* box2) {
             return (box1->value > box2->value);
@@ -426,6 +438,7 @@ void game::checkForAdjacentBoxes() {
     attachedNewBox = false;
 }
 
+// check if any unlock conditions are met
 void game::checkForUnlock() {
     for (int i = 0; i < this->locks.size(); i++) {
         for (int j = 0; j < this->attachedBoxes.size(); j += 2) {
@@ -490,7 +503,7 @@ void game::checkForUnlock() {
     }
 }
 
-
+// animate box rotation
 void game::animateBoxRotation(char key) {
     // 0 - starts from left side
     // 1 - starts from top side
@@ -555,7 +568,7 @@ void game::animateBoxRotation(char key) {
     }
 }
 
-
+// code for rotating attached boxes clockwise
 void game::rotateE() {
     bool broke = false;
 
@@ -563,6 +576,8 @@ void game::rotateE() {
         if (this->attachedBoxes[i]->position.y != this->plr.playerTile.y) {
             if (this->attachedBoxes[i]->position.y < this->plr.playerTile.y) {
                 if (this->attachedBoxes[i]->position.x + 1 <= 15) {
+                    
+                    // check for any obstacles while rotating
                     if (this->level[this->attachedBoxes[i]->position.y][this->attachedBoxes[i]->position.x + 1] == 2 && this->level[this->attachedBoxes[i]->position.y + 1][this->attachedBoxes[i]->position.x + 1] == 2) {
                         this->positions.push_back(Vector2f((this->attachedBoxes[i]->position.x + 1) * 80 - this->attachedBoxes[i]->position.x * 80.f, (this->attachedBoxes[i]->position.y + 1) * 80 - this->attachedBoxes[i]->position.y * 80.f));
                     }
@@ -574,6 +589,8 @@ void game::rotateE() {
             }
             else {
                 if (this->attachedBoxes[i]->position.x - 1 >= 0) {
+                    
+                    // check for any obstacles while rotating
                     if (this->level[this->attachedBoxes[i]->position.y][this->attachedBoxes[i]->position.x - 1] == 2 && this->level[this->attachedBoxes[i]->position.y - 1][this->attachedBoxes[i]->position.x - 1] == 2) {
                         this->positions.push_back(Vector2f((this->attachedBoxes[i]->position.x - 1) * 80 - this->attachedBoxes[i]->position.x * 80.f, (this->attachedBoxes[i]->position.y - 1) * 80 - this->attachedBoxes[i]->position.y * 80.f));
                     }
@@ -587,6 +604,8 @@ void game::rotateE() {
         else {
             if (this->attachedBoxes[i]->position.x < this->plr.playerTile.x) {
                 if (this->attachedBoxes[i]->position.y - 1 >= 0) {
+
+                    // check for any obstacles while rotating
                     if (this->level[this->attachedBoxes[i]->position.y - 1][this->attachedBoxes[i]->position.x] == 2 && this->level[this->attachedBoxes[i]->position.y - 1][this->attachedBoxes[i]->position.x + 1] == 2) {
                         this->positions.push_back(Vector2f((this->attachedBoxes[i]->position.x + 1) * 80 - this->attachedBoxes[i]->position.x * 80.f, (this->attachedBoxes[i]->position.y - 1) * 80 - this->attachedBoxes[i]->position.y * 80.f));
                     }
@@ -598,6 +617,8 @@ void game::rotateE() {
             }
             else {
                 if (this->attachedBoxes[i]->position.y + 1 <= 15) {
+
+                    // check for any obstacles while rotating
                     if (this->level[this->attachedBoxes[i]->position.y + 1][this->attachedBoxes[i]->position.x] == 2 && this->level[this->attachedBoxes[i]->position.y + 1][this->attachedBoxes[i]->position.x - 1] == 2) {
                         this->positions.push_back(Vector2f((this->attachedBoxes[i]->position.x - 1) * 80 - this->attachedBoxes[i]->position.x * 80.f, (this->attachedBoxes[i]->position.y + 1) * 80 - this->attachedBoxes[i]->position.y * 80.f));
                     }
@@ -610,6 +631,7 @@ void game::rotateE() {
         }
     }
 
+    // if no obstacles have been met -> proceed with animating
     if (!broke) {
         animateBoxRotation('e');
     }
@@ -623,6 +645,8 @@ void game::rotateQ() {
         if (this->attachedBoxes[i]->position.y != this->plr.playerTile.y) {
             if (this->attachedBoxes[i]->position.y < this->plr.playerTile.y) {
                 if (this->attachedBoxes[i]->position.x - 1 >= 0) {
+                    
+                    // check for any obstacles while rotating
                     if (this->level[this->attachedBoxes[i]->position.y][this->attachedBoxes[i]->position.x - 1] == 2 && this->level[this->attachedBoxes[i]->position.y + 1][this->attachedBoxes[i]->position.x - 1] == 2) {
                         this->positions.push_back(Vector2f(-((this->attachedBoxes[i]->position.x - 1) * 80 - this->attachedBoxes[i]->position.x * 80.f), -((this->attachedBoxes[i]->position.y + 1) * 80 - this->attachedBoxes[i]->position.y * 80.f)));
                     }
@@ -634,6 +658,8 @@ void game::rotateQ() {
             }
             else {
                 if (this->attachedBoxes[i]->position.x + 1 <= 15) {
+                    
+                    // check for any obstacles while rotating
                     if (this->level[this->attachedBoxes[i]->position.y][this->attachedBoxes[i]->position.x + 1] == 2 && this->level[this->attachedBoxes[i]->position.y - 1][this->attachedBoxes[i]->position.x + 1] == 2) {
                         this->positions.push_back(Vector2f(-((this->attachedBoxes[i]->position.x + 1) * 80 - this->attachedBoxes[i]->position.x * 80.f), -((this->attachedBoxes[i]->position.y - 1) * 80 - this->attachedBoxes[i]->position.y * 80.f)));
                     }
@@ -647,6 +673,8 @@ void game::rotateQ() {
         else {
             if (this->attachedBoxes[i]->position.x < this->plr.playerTile.x) {
                 if (this->attachedBoxes[i]->position.y + 1 <= 15) {
+                    
+                    // check for any obstacles while rotating
                     if (this->level[this->attachedBoxes[i]->position.y + 1][this->attachedBoxes[i]->position.x] == 2 && this->level[this->attachedBoxes[i]->position.y + 1][this->attachedBoxes[i]->position.x + 1] == 2) {
                         this->positions.push_back(Vector2f(-((this->attachedBoxes[i]->position.x + 1) * 80 - this->attachedBoxes[i]->position.x * 80.f), -((this->attachedBoxes[i]->position.y + 1) * 80 - this->attachedBoxes[i]->position.y * 80.f)));
                     }
@@ -658,6 +686,8 @@ void game::rotateQ() {
             }
             else {
                 if (this->attachedBoxes[i]->position.y - 1 >= 0) {
+                    
+                    // check for any obstacles while rotating
                     if (this->level[this->attachedBoxes[i]->position.y - 1][this->attachedBoxes[i]->position.x] == 2 && this->level[this->attachedBoxes[i]->position.y - 1][this->attachedBoxes[i]->position.x - 1] == 2) {
                         this->positions.push_back(Vector2f(-((this->attachedBoxes[i]->position.x - 1) * 80 - this->attachedBoxes[i]->position.x * 80.f), -((this->attachedBoxes[i]->position.y - 1) * 80 - this->attachedBoxes[i]->position.y * 80.f)));
                     }
@@ -670,6 +700,7 @@ void game::rotateQ() {
         }
     }
 
+    // if no obstacles have been met -> proceed with animating
     if (!broke) {
         animateBoxRotation('q');
     }
