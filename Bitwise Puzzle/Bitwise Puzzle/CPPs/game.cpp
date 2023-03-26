@@ -18,7 +18,6 @@ game::game(Vector2u size, string title) {
     this->flagTexture.loadFromFile("./Assets/Flag.png");
     this->box0Texture.loadFromFile("./Assets/Box0.png");
     this->box1Texture.loadFromFile("./Assets/Box1.png");
-    this->mainMenuTexture.loadFromFile("./Assets/mainMenu.png");
     this->lock0Texture.loadFromFile("./Assets/Lock0.png");
     this->lock1Texture.loadFromFile("./Assets/Lock1.png");
     this->plrTexture.loadFromFile("./Assets/ANDoperator.png");
@@ -57,7 +56,7 @@ game::game(Vector2u size, string title) {
 
     this->canMove = true;
     this->flag.setProperties(flagTexture, 11, 0.09);
-    //MainMenu mainMenu(mainMenuTexture, Vector2f(0,0), window);
+    MainMenu mainMenu(Vector2f(0,0), window);
     update();
 };
 
