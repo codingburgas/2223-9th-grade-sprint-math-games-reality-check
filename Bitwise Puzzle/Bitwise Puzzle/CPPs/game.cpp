@@ -51,8 +51,8 @@ game::game(Vector2u size, string title) {
     };
 
     this->currentLevel = 2;
-    loadLevel(to_string(this->currentLevel));
     this->plr.setTexture(plrTexture);
+    loadLevel(to_string(this->currentLevel));
 
     this->canMove = true;
     this->windowShouldClose = false;
@@ -440,6 +440,7 @@ void game::checkForUnlock() {
         for (int j = 0; j < this->attachedBoxes.size(); j += 2) {
             if (j + 1 < this->attachedBoxes.size()) {
                 if (this->attachedBoxes[j]->position.y != this->plr.playerTile.y && this->attachedBoxes[j + 1]->position.y != this->plr.playerTile.y) {
+                    cout << "if" << endl;
                     if (this->level[9][0] == 0) {
                         if (this->locks[i].value == (this->attachedBoxes[j]->value && this->attachedBoxes[j + 1]->value)) {
                             this->level[this->locks[i].position.y][this->locks[i].position.x] = 2;
@@ -448,25 +449,49 @@ void game::checkForUnlock() {
                             break;
                         }
                     }
-                    else if (this->locks[i].value == (this->attachedBoxes[j]->value || this->attachedBoxes[j + 1]->value)) {
-                        this->level[this->locks[i].position.y][this->locks[i].position.x] = 2;
-                        thread t(&CustomLock::fadeOut, &this->locks[i]);
-                        t.detach();
-                        break;
+                    else if (this->level[9][0] == 1) {
+                        if (this->locks[i].value == (this->attachedBoxes[j]->value || this->attachedBoxes[j + 1]->value)) {
+                            this->level[this->locks[i].position.y][this->locks[i].position.x] = 2;
+                            thread t(&CustomLock::fadeOut, &this->locks[i]);
+                            t.detach();
+                            break;
+                        }
+
                     }
-                    else if (!(this->locks[i].value == (this->attachedBoxes[j]->value || this->attachedBoxes[j + 1]->value))) {
-                        this->level[this->locks[i].position.y][this->locks[i].position.x] = 2;
-                        thread t(&CustomLock::fadeOut, &this->locks[i]);
-                        t.detach();
-                        break;
+                    else if (this->level[9][0] == 2) {
+                        if (!(this->locks[i].value == (this->attachedBoxes[j]->value || this->attachedBoxes[j + 1]->value))) {
+                            this->level[this->locks[i].position.y][this->locks[i].position.x] = 2;
+                            thread t(&CustomLock::fadeOut, &this->locks[i]);
+                            t.detach();
+                            break;
+                        }
                     }
                 }
+
                 else if (this->attachedBoxes[j]->position.x != this->plr.playerTile.x && this->attachedBoxes[j + 1]->position.x != this->plr.playerTile.x) {
-                    if (this->locks[i].value == (this->attachedBoxes[j]->value || this->attachedBoxes[j + 1]->value)) {
-                        this->level[this->locks[i].position.y][this->locks[i].position.x] = 2;
-                        thread t(&CustomLock::fadeOut, &this->locks[i]);
-                        t.detach();
-                        break;
+                    if (this->level[9][0] == 0) {
+                        if (this->locks[i].value == (this->attachedBoxes[j]->value && this->attachedBoxes[j + 1]->value)) {
+                            this->level[this->locks[i].position.y][this->locks[i].position.x] = 2;
+                            thread t(&CustomLock::fadeOut, &this->locks[i]);
+                            t.detach();
+                            break;
+                        }
+                    }
+                    else if (this->level[9][0] == 1) {
+                        if (this->locks[i].value == (this->attachedBoxes[j]->value || this->attachedBoxes[j + 1]->value)) {
+                            this->level[this->locks[i].position.y][this->locks[i].position.x] = 2;
+                            thread t(&CustomLock::fadeOut, &this->locks[i]);
+                            t.detach();
+                            break;
+                        }
+                    }
+                    else if (this->level[9][0] == 2) {
+                        if (!(this->locks[i].value == (this->attachedBoxes[j]->value || this->attachedBoxes[j + 1]->value))) {
+                            this->level[this->locks[i].position.y][this->locks[i].position.x] = 2;
+                            thread t(&CustomLock::fadeOut, &this->locks[i]);
+                            t.detach();
+                            break;
+                        }
                     }
                 }
             }
