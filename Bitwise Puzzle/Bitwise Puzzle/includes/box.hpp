@@ -12,5 +12,5 @@ public:
 	void setTexture(Texture& boxTexture);
 	void setValue(bool value);
 	void move(Vector2f offset);
-	Vector2u position;
+	Vector2i position;
 };

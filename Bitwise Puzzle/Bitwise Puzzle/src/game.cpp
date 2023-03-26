@@ -7,6 +7,7 @@
 
 using json = nlohmann::json;
 
+// variable initializer & flow loader
 game::game(Vector2u size, string title) {
     this->window.create(VideoMode(size.x, size.y), title);
 	this->window.setFramerateLimit(60);
@@ -41,7 +42,7 @@ game::game(Vector2u size, string title) {
         {2, this->XORTexture}
     };
 
-    this->currentLevel = 2;
+    this->currentLevel = 4;
     this->plr.setTexture(plrTexture);
     loadLevel(to_string(this->currentLevel));
 
@@ -52,6 +53,7 @@ game::game(Vector2u size, string title) {
     update();
 };
 
+// level loader
 void game::loadLevel(string level) {
     fstream file("./Maps/maps.json");
     json data = json::parse(file);
@@ -66,6 +68,7 @@ void game::loadLevel(string level) {
         return;
     }
 
+    // take data from maps.json and create entities based on values in 2d arrays
     for (int i = 0; i < 9; i++) {
         this->tiles.push_back(vector<Tile>());
 
@@ -142,6 +145,7 @@ void game::loadLevel(string level) {
     
 }
 
+// draw the window
 void game::drawWindow()
 {
     this->window.clear();
@@ -175,6 +179,7 @@ void game::drawWindow()
     this->dt = clock.restart();
 }
 
+// main game loop
 void game::update()
 {
     while (this->window.isOpen())
@@ -193,6 +198,7 @@ void game::update()
     }
 }
 
+// key pressed events for movement, rotation and level resetting
 void game::processKeyPressed() {
     if (this->event.key.code == Keyboard::A) {
         if (this->plr.playerTile.x - 1 >= 0) {
@@ -209,6 +215,10 @@ void game::processKeyPressed() {
                             break;
 
                         }
+                    }
+                    else {
+                        canMove = false;
+                        break;
                     }
                 }
                 if (canMove) {
@@ -233,6 +243,10 @@ void game::processKeyPressed() {
                             break;
                         }
                     }
+                    else {
+                        canMove = false;
+                        break;
+                    }
                 }
                 if (canMove) {
                     animatePlayerMovement(80, 0);
@@ -256,6 +270,10 @@ void game::processKeyPressed() {
 
                         }
                     }
+                    else {
+                        canMove = false;
+                        break;
+                    }
                 }
 
                 if (canMove) {
@@ -278,6 +296,10 @@ void game::processKeyPressed() {
                             canMove = false;
                             break;
                         }
+                    }
+                    else {
+                        canMove = false;
+                        break;
                     }
                 }
 
@@ -439,12 +461,12 @@ void game::checkForAdjacentBoxes() {
 }
 
 // check if any unlock conditions are met
+// upon meeting unlock condition -> spawn thread for fading out said lock
 void game::checkForUnlock() {
     for (int i = 0; i < this->locks.size(); i++) {
         for (int j = 0; j < this->attachedBoxes.size(); j += 2) {
             if (j + 1 < this->attachedBoxes.size()) {
                 if (this->attachedBoxes[j]->position.y != this->plr.playerTile.y && this->attachedBoxes[j + 1]->position.y != this->plr.playerTile.y) {
-                    cout << "if" << endl;
                     if (this->level[9][0] == 0) {
                         if (this->locks[i].value == (this->attachedBoxes[j]->value && this->attachedBoxes[j + 1]->value)) {
                             this->level[this->locks[i].position.y][this->locks[i].position.x] = 2;

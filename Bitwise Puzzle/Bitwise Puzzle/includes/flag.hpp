@@ -13,7 +13,7 @@ public:
 	void draw(RenderWindow& window);
 	void setPosition(Vector2f position);
 
-	Vector2u position;
+	Vector2i position;
 	IntRect uvRect;
 	RectangleShape body;
 };
