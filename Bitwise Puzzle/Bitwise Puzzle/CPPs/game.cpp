@@ -138,8 +138,7 @@ void game::loadLevel(string level) {
         }
     }
     this->plrTexture.update(this->plrTextures[this->level[9][0]]);
-
-
+    this->plr.setTexture(this->plrTexture);
 }
 
 void game::drawWindow()
