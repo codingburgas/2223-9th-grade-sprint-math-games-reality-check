@@ -51,8 +51,8 @@ game::game(Vector2u size, string title) {
         {2, this->XORTexture}
     };
 
-    this->currentLevel = 2;
-    loadLevel("1");
+    this->currentLevel = 4;
+    loadLevel(to_string(this->currentLevel));
     this->plr.setTexture(plrTexture);
 
     this->canMove = true;
