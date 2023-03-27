@@ -18,7 +18,8 @@ Our main idea is to show You that math can be fun and interesting!
 - [Documentation](Documentation.docx)<br>
 - [Presentation](Presentation.pptx)<br>				 
 - [QA Documentation](QA_WordDocumentation.docx)<br>					 
-- [QA table](QA_Documentation.xlsx) 		
+- [QA table](QA_Documentation.xlsx)<br>
+- [Code Documentation](https://reality-check-codingburgas.netlify.app)
 																			 
 ## :computer: Used technologies <a name="used_technologies"></a>
 - [Visual Studio](https://visualstudio.microsoft.com/) - Application
