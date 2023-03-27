@@ -1,0 +1,12 @@
+digraph "src"
+{
+ // LATEX_PDF_SIZE
+  bgcolor="transparent";
+  edge [fontname=Helvetica,fontsize=10,labelfontname=Helvetica,labelfontsize=10];
+  node [fontname=Helvetica,fontsize=10,shape=box,height=0.2,width=0.4];
+  compound=true
+  subgraph clusterdir_7d7e285c491684cd3aec695192568fe4 {
+    graph [ bgcolor="#e9ebf6", pencolor="grey50", label="Bitwise Puzzle", fontname=Helvetica,fontsize=10 style="filled,dashed", URL="dir_7d7e285c491684cd3aec695192568fe4.html",tooltip=""]
+  dir_ff4a874ef21f80b7162e723173d18949 [label="src", fillcolor="#e9ebf6", color="grey25", style="filled,bold", URL="dir_ff4a874ef21f80b7162e723173d18949.html",tooltip=""];
+  }
+}

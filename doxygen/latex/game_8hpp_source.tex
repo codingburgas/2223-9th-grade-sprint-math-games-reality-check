@@ -1,0 +1,60 @@
+\hypertarget{game_8hpp_source}{}\doxysection{game.\+hpp}
+\label{game_8hpp_source}\index{game.hpp@{game.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#include\ "{}precompile.hpp"{}}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#include\ "{}tile.hpp"{}}}
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ "{}mainMenu.hpp"{}}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}player.hpp"{}}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}box.hpp"{}}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ "{}CustomLock.hpp"{}}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}flag.hpp"{}}}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classgame}{game}}\ \{}
+\DoxyCodeLine{00010\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00011\ \ \ \ \ \mbox{\hyperlink{classgame}{game}}(Vector2u\ size,\ \textcolor{keywordtype}{string}\ title);}
+\DoxyCodeLine{00012\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classgame_aae489d5a84e35120c7e6ad52bbb918e9_aae489d5a84e35120c7e6ad52bbb918e9}{drawWindow}}();}
+\DoxyCodeLine{00013\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classgame_a2be7307eb3c9065fc7c728edd68d0a78_a2be7307eb3c9065fc7c728edd68d0a78}{update}}();}
+\DoxyCodeLine{00014\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classgame_a9466b379a74f91e07acb2eb72308f896_a9466b379a74f91e07acb2eb72308f896}{processKeyPressed}}();}
+\DoxyCodeLine{00015\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classgame_adc58c649d4738e641399aa41a7f066d3_adc58c649d4738e641399aa41a7f066d3}{animatePlayerMovement}}(\textcolor{keywordtype}{int}\ xChange,\ \textcolor{keywordtype}{int}\ yChange);}
+\DoxyCodeLine{00016\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classgame_a52f195f9e1b275c07ea78d3ae167dab2_a52f195f9e1b275c07ea78d3ae167dab2}{loadLevel}}(\textcolor{keywordtype}{string}\ \mbox{\hyperlink{classgame_a76a11cbbbccea4454cf235b9d947d61c_a76a11cbbbccea4454cf235b9d947d61c}{level}});}
+\DoxyCodeLine{00017\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classgame_a84e73dcbaa59ea7c74d84b89b18eea2d_a84e73dcbaa59ea7c74d84b89b18eea2d}{checkForAdjacentBoxes}}();}
+\DoxyCodeLine{00018\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classgame_a1fa75a376d52aea63a982b13e9c53104_a1fa75a376d52aea63a982b13e9c53104}{checkForUnlock}}();}
+\DoxyCodeLine{00019\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classgame_af95dfd842e0cf637fd02084178a8f5c9_af95dfd842e0cf637fd02084178a8f5c9}{animateBoxRotation}}(\textcolor{keywordtype}{char}\ key);}
+\DoxyCodeLine{00020\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classgame_a284cded9d926978bbdd630f2674e51f1_a284cded9d926978bbdd630f2674e51f1}{rotateE}}();}
+\DoxyCodeLine{00021\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classgame_a9de70b6bf3c1c142bde8035657801819_a9de70b6bf3c1c142bde8035657801819}{rotateQ}}();}
+\DoxyCodeLine{00022\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00023\ \ \ \ \ RenderWindow\ \mbox{\hyperlink{classgame_a13cefb2f5a79f11ed8ce448648e6b0f9_a13cefb2f5a79f11ed8ce448648e6b0f9}{window}};}
+\DoxyCodeLine{00024\ \ \ \ \ Texture\ \mbox{\hyperlink{classgame_aca4e990bf1c4ab7aac5e347a71d9f584_aca4e990bf1c4ab7aac5e347a71d9f584}{voidTexture}};}
+\DoxyCodeLine{00025\ \ \ \ \ Texture\ \mbox{\hyperlink{classgame_ab955f2b0e393164f1168413c8535938b_ab955f2b0e393164f1168413c8535938b}{wallTexture}};}
+\DoxyCodeLine{00026\ \ \ \ \ Texture\ \mbox{\hyperlink{classgame_afea2a840f4c07e116a2c324847439bcd_afea2a840f4c07e116a2c324847439bcd}{floorTexture}};}
+\DoxyCodeLine{00027\ \ \ \ \ Texture\ \mbox{\hyperlink{classgame_a128fe936c3b659e18c33af7b6ecd47ef_a128fe936c3b659e18c33af7b6ecd47ef}{flagTexture}};}
+\DoxyCodeLine{00028\ \ \ \ \ Texture\ \mbox{\hyperlink{classgame_a58d11cc8ec81f900a278f087c66c55de_a58d11cc8ec81f900a278f087c66c55de}{mainMenuTexture}};}
+\DoxyCodeLine{00029\ \ \ \ \ Texture\ \mbox{\hyperlink{classgame_a94292bdf3012dc8bb006ea0b203e1a0f_a94292bdf3012dc8bb006ea0b203e1a0f}{plrTexture}};}
+\DoxyCodeLine{00030\ \ \ \ \ Texture\ \mbox{\hyperlink{classgame_a4b27420cbaffa36cf84f40840a11e09f_a4b27420cbaffa36cf84f40840a11e09f}{box0Texture}};}
+\DoxyCodeLine{00031\ \ \ \ \ Texture\ \mbox{\hyperlink{classgame_a065c81de46f8c107c1b7ed031d33f1d1_a065c81de46f8c107c1b7ed031d33f1d1}{box1Texture}};}
+\DoxyCodeLine{00032\ \ \ \ \ Texture\ \mbox{\hyperlink{classgame_a8e07ebadec1c256e0a1b3ac51b800e5c_a8e07ebadec1c256e0a1b3ac51b800e5c}{lock0Texture}};}
+\DoxyCodeLine{00033\ \ \ \ \ Texture\ \mbox{\hyperlink{classgame_ad0ea064b44037a3c9b919697ec80c1df_ad0ea064b44037a3c9b919697ec80c1df}{lock1Texture}};}
+\DoxyCodeLine{00034\ \ \ \ \ Texture\ \mbox{\hyperlink{classgame_a110c825a8fa619454ee70a4bcb6ddd3e_a110c825a8fa619454ee70a4bcb6ddd3e}{ANDTexture}};}
+\DoxyCodeLine{00035\ \ \ \ \ Texture\ \mbox{\hyperlink{classgame_a02136200857b3b9051b4a73959f8258b_a02136200857b3b9051b4a73959f8258b}{ORTexture}};}
+\DoxyCodeLine{00036\ \ \ \ \ Texture\ \mbox{\hyperlink{classgame_a05d420a44eb4577b05c549a3a35d9bdd_a05d420a44eb4577b05c549a3a35d9bdd}{XORTexture}};}
+\DoxyCodeLine{00037\ \ \ \ \ Event\ \mbox{\hyperlink{classgame_ac6343970494cb3429addfd2f4309076d_ac6343970494cb3429addfd2f4309076d}{event}};}
+\DoxyCodeLine{00038\ \ \ \ \ \mbox{\hyperlink{class_player}{Player}}\ \mbox{\hyperlink{classgame_a5ec384800f39b4ddca490c430d148db8_a5ec384800f39b4ddca490c430d148db8}{plr}};}
+\DoxyCodeLine{00039\ \ \ \ \ \mbox{\hyperlink{class_flag}{Flag}}\ \mbox{\hyperlink{classgame_abccfec15f28d2cd54336da30b37ff9b5_abccfec15f28d2cd54336da30b37ff9b5}{flag}};}
+\DoxyCodeLine{00040\ \ \ \ \ Clock\ \mbox{\hyperlink{classgame_a87af1a0a5737d1e0dc1205f9a2faa8e2_a87af1a0a5737d1e0dc1205f9a2faa8e2}{clock}};}
+\DoxyCodeLine{00041\ \ \ \ \ Time\ \mbox{\hyperlink{classgame_a3fcf5b782e64dbf57605998669d0ce97_a3fcf5b782e64dbf57605998669d0ce97}{dt}};}
+\DoxyCodeLine{00042\ \ \ \ \ map<int,\ Texture>\ \mbox{\hyperlink{classgame_ac39db8d67ca501753c217fd662aa12f4_ac39db8d67ca501753c217fd662aa12f4}{textureMap}};}
+\DoxyCodeLine{00043\ \ \ \ \ map<int,\ Texture>\ \mbox{\hyperlink{classgame_a8fb6427460e64fed36aceaac1edb6eb7_a8fb6427460e64fed36aceaac1edb6eb7}{plrTextures}};}
+\DoxyCodeLine{00044\ \ \ \ \ vector<Box>\ \mbox{\hyperlink{classgame_a2ea3c54483cb83ac6c69a0812e89f713_a2ea3c54483cb83ac6c69a0812e89f713}{boxes}};}
+\DoxyCodeLine{00045\ \ \ \ \ vector<Box*>\ \mbox{\hyperlink{classgame_aec8cae301d51fd348067fba2559cb77f_aec8cae301d51fd348067fba2559cb77f}{attachedBoxes}};}
+\DoxyCodeLine{00046\ \ \ \ \ vector<CustomLock>\ \mbox{\hyperlink{classgame_aa7e7417a35c7f6218bae398c685769b1_aa7e7417a35c7f6218bae398c685769b1}{locks}};}
+\DoxyCodeLine{00047\ \ \ \ \ vector<vector<int>>\ \mbox{\hyperlink{classgame_a76a11cbbbccea4454cf235b9d947d61c_a76a11cbbbccea4454cf235b9d947d61c}{level}};}
+\DoxyCodeLine{00048\ \ \ \ \ vector<vector<Tile>>\ \mbox{\hyperlink{classgame_af9b10dace0eac347d03febae62abec70_af9b10dace0eac347d03febae62abec70}{tiles}};}
+\DoxyCodeLine{00049\ \ \ \ \ vector<Vector2f>\ \mbox{\hyperlink{classgame_a3774ee9c3dc14d58b96e72950c67da5f_a3774ee9c3dc14d58b96e72950c67da5f}{positions}};}
+\DoxyCodeLine{00050\ }
+\DoxyCodeLine{00051\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classgame_a4971502c5ce5f352bb7d99d8663a559d_a4971502c5ce5f352bb7d99d8663a559d}{canMove}};}
+\DoxyCodeLine{00052\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classgame_ae48ebb11a5c306c9c66930da7fbc7858_ae48ebb11a5c306c9c66930da7fbc7858}{windowShouldClose}};}
+\DoxyCodeLine{00053\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classgame_a4807546e5eafc52d9d16413ad8902e90_a4807546e5eafc52d9d16413ad8902e90}{currentLevel}};}
+\DoxyCodeLine{00054\ \};}
+
+\end{DoxyCode}

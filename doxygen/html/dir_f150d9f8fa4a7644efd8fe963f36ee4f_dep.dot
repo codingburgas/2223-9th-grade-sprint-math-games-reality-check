@@ -1,0 +1,16 @@
+digraph "Bitwise Puzzle"
+{
+ // LATEX_PDF_SIZE
+  bgcolor="transparent";
+  edge [fontname=Helvetica,fontsize=10,labelfontname=Helvetica,labelfontsize=10];
+  node [fontname=Helvetica,fontsize=10,shape=box,height=0.2,width=0.4];
+  compound=true
+  subgraph clusterdir_e4880468fce64ee24fb5f5b618166506 {
+    graph [ bgcolor="#e9ebf6", pencolor="grey50", label="2223-9th-grade-sprint\l-math-games-reality-check", fontname=Helvetica,fontsize=10 style="filled,dashed", URL="dir_e4880468fce64ee24fb5f5b618166506.html",tooltip=""]
+  subgraph clusterdir_f150d9f8fa4a7644efd8fe963f36ee4f {
+    graph [ bgcolor="#e9ebf6", pencolor="grey25", label="", fontname=Helvetica,fontsize=10 style="filled,bold", URL="dir_f150d9f8fa4a7644efd8fe963f36ee4f.html",tooltip=""]
+    dir_f150d9f8fa4a7644efd8fe963f36ee4f [shape=plaintext, label="Bitwise Puzzle"];
+  dir_7d7e285c491684cd3aec695192568fe4 [label="Bitwise Puzzle", fillcolor="#929ed1", color="grey25", style="filled", URL="dir_7d7e285c491684cd3aec695192568fe4.html",tooltip=""];
+  }
+  }
+}
