@@ -6,20 +6,27 @@
 
 ## :pen: Table of Contents
 - [Description](#Description)
-- [Used technologies](#used_technologies)																																															
-- [Team members](#team_members)
+- [Documentation](#Documentation)
+- [Used technologies](#used_technologies)															
+- [Our team](#our_team)
 
 
-## :book: Description <a name="Description"></a>
+## :blue_book: Description <a name="Description"></a>
 Our main idea is to show You that math can be fun and interesting!
-																					 
+				
+## :scroll: Documentation <a name="Documentation"></a>
+- [Documentation](Documentation.docx)<br>
+- [Presentation](Presentation.pptx)<br>				 
+- [QA Documentation](QA_WordDocumentation.docx)<br>					 
+- [QA table](QA_Documentation.xlsx) 		
+																			 
 ## :computer: Used technologies <a name="used_technologies"></a>
 - [Visual Studio](https://visualstudio.microsoft.com/) - Application
 - [Word](https://www.microsoft.com/en-us/microsoft-365/word) - Documentation
 - [PowerPoint](https://www.microsoft.com/en-us/microsoft-365/powerpoint) - Presentation
 - [Excel](https://www.microsoft.com/en-us/microsoft-365/excel) - QA Documentation																					 
 
-## :busts_in_silhouette: Our team <a name="team_members"></a>
+## :busts_in_silhouette: Our team <a name="our_team"></a>
 - [Виктория Купенова](https://github.com/VGKupenova21) - Scrum Trainer 
 - [Ивайло Бъчваров](https://github.com/ISBachvarov21) - Backend Developer
 - [Мартин Белчев](https://github.com/MDBelchev21) - Frontend Developer
