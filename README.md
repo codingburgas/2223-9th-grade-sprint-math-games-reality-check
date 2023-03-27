@@ -19,7 +19,7 @@ Our main idea is to show You that math can be fun and interesting!
 - [PowerPoint](https://www.microsoft.com/en-us/microsoft-365/powerpoint) - Presentation
 - [Excel](https://www.microsoft.com/en-us/microsoft-365/excel) - QA Documentation																					 
 
-## :busts_in_silhouette: Team members <a name="team_members"></a>
+## :busts_in_silhouette: Our team <a name="team_members"></a>
 - [Виктория Купенова](https://github.com/VGKupenova21) - Scrum Trainer 
 - [Ивайло Бъчваров](https://github.com/ISBachvarov21) - Backend Developer
 - [Мартин Белчев](https://github.com/MDBelchev21) - Frontend Developer
